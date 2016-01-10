@@ -71,3 +71,5 @@ deploy:
   type: git
   repo: git@github.com:iamcco/iamcco.github.io.git
   branch: master
+  name: 年糕小豆汤
+  email: ooiss@qq.com
