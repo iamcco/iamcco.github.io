@@ -7,12 +7,12 @@ title: 日常
 subtitle: "电助！凉子，看到了吗！"
 description:
 author: 年糕小豆汤
-language: 简体中文
+language:
 timezone:
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://yuuko.com
+url: http://blog.yuuko.cn
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
