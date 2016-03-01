@@ -1,5 +1,6 @@
 title: hello world
 date: 2016-01-10 15:39:44
+comments: true
 tags:
 ---
 
