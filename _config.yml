@@ -69,7 +69,8 @@ theme: yuuko
 ## Docs: http://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repo: git@github.com:iamcco/iamcco.github.io.git
-  branch: master
   name: 年糕小豆汤
   email: ooiss@qq.com
+  repo:
+    github: git@github.com:iamcco/iamcco.github.io.git,master
+    coding: git@git.coding.net:yuuko/yuuko.git,master
