@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+  
+
+  <title>
+    
+      JavaScript 继承
+    
+  </title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="javascript," />
+  
+
+  <meta name="description" content="关于JavaScript对象继承，由于JavaScript并没有类，所以对象的继承是通过原型链子来完成的。
+一般的继承如下：
+1234567891011121314function Person(name, age) &amp;#123;    this.name = name;    this.age = age;&amp;#125;function Man() &amp;#123;&amp;#125;Man.prototyp">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript 继承">
+<meta property="og:url" content="http://blog.yuuko.cn/2016/04/27/JavaScript继承/index.html">
+<meta property="og:site_name" content="日常">
+<meta property="og:description" content="关于JavaScript对象继承，由于JavaScript并没有类，所以对象的继承是通过原型链子来完成的。
+一般的继承如下：
+1234567891011121314function Person(name, age) &amp;#123;    this.name = name;    this.age = age;&amp;#125;function Man() &amp;#123;&amp;#125;Man.prototyp">
+<meta property="og:updated_time" content="2016-05-17T14:29:13.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JavaScript 继承">
+<meta name="twitter:description" content="关于JavaScript对象继承，由于JavaScript并没有类，所以对象的继承是通过原型链子来完成的。
+一般的继承如下：
+1234567891011121314function Person(name, age) &amp;#123;    this.name = name;    this.age = age;&amp;#125;function Man() &amp;#123;&amp;#125;Man.prototyp">
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+  
+
+  <link rel="stylesheet" href="/css/styles.css">
+
+</head>
+<body class='index-bg'>
+
+
+  <div class="main-container margin-at margin-t60 margin-b60">
+    <article class="article">
+
+    <!--m:markdown body-->
+    <div class="markdown-body">
+        <h1 id="JavaScript 继承">JavaScript 继承</h1>
+        <p>关于JavaScript对象继承，由于JavaScript并没有类，所以对象的继承是通过原型链子来完成的。</p>
+<p>一般的继承如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name, age</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.name = name;</span><br><span class="line">    <span class="keyword">this</span>.age = age;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Man</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Man.prototype = <span class="keyword">new</span> Person(<span class="string">'lettleMing'</span>, <span class="number">12</span>);</span><br><span class="line">Man.prototype.constructor = Man;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> man = <span class="keyword">new</span> Man();</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(man.name, man.age);                 <span class="comment">// lettleMing 12</span></span><br></pre></td></tr></table></figure>
+<p>上面是一般的继承的写法，在看看错误的写法：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name, age</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.name = name;</span><br><span class="line">    <span class="keyword">this</span>.age = age;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Man</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    Man.prototype = <span class="keyword">new</span> Person(<span class="string">'lettleMing'</span>, <span class="number">12</span>);</span><br><span class="line">    Man.prototype.constructor = Man;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> man = <span class="keyword">new</span> Man();</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(man.name, man.age);                 <span class="comment">// undefined undefined</span></span><br></pre></td></tr></table></figure>
+<p>之所以会出现上面这种情况，是由于不了解<strong>new</strong>操作符创建对象的过程。在<code>var man = new Man()</code>这句执行的过程中，首先：</p>
+<ol>
+<li>通过继承<code>Man.prototype</code>创建一个新的对象。</li>
+<li>使用<code>argumengs</code>参数调用<code>Man</code>构造方法，并且把<code>this</code>指向第一步创建的对象。</li>
+<li>如果<code>Man</code>方法没有<code>return</code>语句，即返回一个对象，则使用第一步生成的对象作为<code>new</code>表达式的返回值返回。</li>
+</ol>
+<p>第二种方法由于在创建对象的过程中，继承这一步先于构造方法的执行，所以构造方法中对原型的修改并没有反应到新生成的对象当中。</p>
+<h5 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h5><ol>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/new" target="_blank" rel="external">new 操作符</a></li>
+</ol>
+
+    </div>
+    <!--m:markdown body-->
+
+</article>
+
+</div>
+
+
+
+
+    <div class="main-container margin-at">
+    <div class="comment-block">
+        
+            <div class="ds-thread" data-thread-key="2016/04/27/JavaScript继承/" data-title="JavaScript 继承" data-url="http://blog.yuuko.cn/2016/04/27/JavaScript继承/">
+                <script type="text/javascript">
+                    var duoshuoQuery = {short_name:"yuukocn"};
+                    (function() {
+                        var ds = document.createElement('script');
+                        ds.type = 'text/javascript';ds.async = true;
+                        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+                        ds.charset = 'UTF-8';
+                        (document.getElementsByTagName('head')[0] 
+                            || document.getElementsByTagName('body')[0]).appendChild(ds);
+                    })();
+                </script>
+            </div>
+        
+    </div>
+</div>
+
+
+
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?df895598ee93a4eedafb515b4186ab2e";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+</body>
+</html>
+
