@@ -73,4 +73,4 @@ deploy:
   email: ooiss@qq.com
   repo:
     github: git@github.com:iamcco/iamcco.github.io.git,master
-    coding: git@git.coding.net:yuuko/yuuko.git,master
+    #coding: git@git.coding.net:yuuko/yuuko.git,master
