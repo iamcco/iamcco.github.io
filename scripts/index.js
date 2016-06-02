@@ -1,4 +1,4 @@
-window.fetch && fetch("/images.json").then(function(res) {
+window.fetch && fetch('/search.json').then(function(res) {
     if(res.ok) {
         return res.json();
     } else {
