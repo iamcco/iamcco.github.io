@@ -1,0 +1,22 @@
+{
+  "name": "iamcco.github.io",
+  "version": "1.0.0",
+  "description": "blog",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iamcco/iamcco.github.io.git"
+  },
+  "author": "年糕小豆汤 <ooiss@qq.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/iamcco/iamcco.github.io/issues"
+  },
+  "homepage": "https://github.com/iamcco/iamcco.github.io#readme",
+  "dependencies": {
+    "post-cli": "^1.0.5"
+  }
+}
