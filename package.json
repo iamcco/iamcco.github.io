@@ -1,0 +1,46 @@
+{
+  "name": "iamcco.github.io",
+  "version": "1.0.0",
+  "description": "年糕小豆汤‘s blog",
+  "main": "index.js",
+  "repository": "https://github.com/iamcco/iamcco.github.io.git",
+  "author": "iamcco <ooiss@qq.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "next ./",
+    "build": "next build",
+    "start": "next start",
+    "lint:fix": "eslint --fix ./",
+    "lint-staged": "yarn lint:fix"
+  },
+  "dependencies": {
+    "next": "^7.0.2",
+    "react": "^16.6.0",
+    "react-dom": "^16.6.0"
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.1.0",
+    "@babel/plugin-proposal-decorators": "^7.1.2",
+    "@zeit/next-less": "^1.0.1",
+    "babel-plugin-preval": "^3.0.1",
+    "eslint": "^5.9.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-config-standard-react": "^7.0.2",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-node": "^8.0.0",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-react": "^7.11.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "husky": "^1.1.3",
+    "less": "^3.8.1",
+    "lint-staged": "^8.0.4"
+  },
+  "lint-staged": {
+    "**/*.js": ["lint-staged", "git add"]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn lint-staged"
+    }
+  }
+}
