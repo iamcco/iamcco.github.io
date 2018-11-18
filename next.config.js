@@ -2,6 +2,8 @@
 const path = require('path')
 const nib = require('nib')
 const withStylus = require('@zeit/next-stylus')
+const withCSS = require('@zeit/next-css')
+const hljs = require('highlight.js')
 const mditSub = require('markdown-it-sub')
 const mditSup = require('markdown-it-sup')
 const mditFootnote = require('markdown-it-footnote')
@@ -14,11 +16,12 @@ const mditMark = require('markdown-it-mark')
 const mditKatex = require('markdown-it-katex')
 const mditplantuml = require('markdown-it-plantuml')
 const mditTasklist = require('markdown-it-task-lists')
+const mditMermaid = require('md-it-mermaid')
 const mditChart = require('markdown-it-chart').default
 
 const { getPosts } = require('./post')
 
-module.exports = withStylus({
+module.exports = withCSS(withStylus({
   stylusLoaderOptions: {
     use: [nib()]
   },
@@ -52,11 +55,7 @@ module.exports = withStylus({
           },
           {
             test: /\.md$/,
-            loader: 'str-loader'
-          },
-          {
-            test: /\.md/,
-            loader: 'markdown-it-loader',
+            loader: 'md-it-loader',
             options: {
               // Enable HTML tags in source
               html: true,
@@ -81,7 +80,20 @@ module.exports = withStylus({
               // Highlighter function. Should return escaped HTML,
               // or '' if the source string is not changed and should be escaped externally.
               // If result starts with <pre... internal wrapper is skipped.
-              use: [
+              highlight: function (str, lang) {
+                if (lang && hljs.getLanguage(lang)) {
+                  try {
+                    return hljs.highlight(lang, str).value
+                  } catch (err) { }
+                }
+
+                try {
+                  return hljs.highlightAuto(str).value
+                } catch (err) { }
+
+                return ''
+              },
+              plugins: [
                 mditSub,
                 mditSup,
                 mditFootnote,
@@ -94,6 +106,7 @@ module.exports = withStylus({
                 mditKatex,
                 mditplantuml,
                 mditTasklist,
+                mditMermaid,
                 mditChart
               ]
             }
@@ -109,4 +122,4 @@ module.exports = withStylus({
       }
     }
   }
-})
+}))

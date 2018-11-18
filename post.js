@@ -14,6 +14,7 @@ const mditMark = require('markdown-it-mark')
 const mditKatex = require('markdown-it-katex')
 const mditplantuml = require('markdown-it-plantuml')
 const mditTasklist = require('markdown-it-task-lists')
+const mditMermaid = require('md-it-mermaid')
 const mditChart = require('markdown-it-chart').default
 
 const mdExtend = /.md$/
@@ -71,6 +72,7 @@ function getRender (options = {}, plugins = []) {
     mditKatex,
     mditplantuml,
     mditTasklist,
+    mditMermaid,
     mditChart
   ].concat(plugins).forEach(plugin => {
     mdRender.use(plugin)
