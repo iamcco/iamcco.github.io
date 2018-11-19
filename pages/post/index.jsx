@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import Page from '@/components/page'
 
 import Markdown from '@/components/markdown'
 
@@ -20,9 +21,11 @@ class Post extends React.PureComponent {
     const { post } = this.props
 
     return (
-      <Markdown
-        post={post}
-      />
+      <Page>
+        <Markdown
+          post={post}
+        />
+      </Page>
     )
   }
 }
