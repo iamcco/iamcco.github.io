@@ -1,19 +1,20 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import injectSheet from 'react-jss'
 
-import './style.styl'
+import styles from './style'
 
 class Page extends React.PureComponent {
   render () {
-    const { children } = this.props
+    const { children, classes } = this.props
 
     return (
-      <div className='container'>
-        <div className='white'>
-          <h1 className='title'>
+      <div className={classes.container}>
+        <div className={classes.header}>
+          <h1 className={classes.title}>
             深入浅出 RXJS
           </h1>
-          <nav className='nav'>
+          <nav className={classes.nav}>
             <h2>
               年糕小豆汤
             </h2>
@@ -23,25 +24,26 @@ class Page extends React.PureComponent {
             <h3>关于</h3>
           </nav>
         </div>
-        <div className='logo'>
-          日常
-        </div>
-        <section className='content-ctn'>
-          <div className='content'>
+        <section className={classes.contentCtn}>
+          <div className={classes.content}>
             {children}
           </div>
         </section>
+        <div className={classes.logo}>
+          日常
+        </div>
       </div>
     )
   }
 }
 
 Page.propTypes = {
-  children: PropTypes.element
+  children: PropTypes.element,
+  classes: PropTypes.object
 }
 
 Page.defaultProps = {
   children: null
 }
 
-export default Page
+export default injectSheet(styles)(Page)

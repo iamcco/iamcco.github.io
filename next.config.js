@@ -28,12 +28,53 @@ module.exports = withCSS(withStylus({
   pageExtensions: ['jsx'],
   exportPathMap: async function () {
     const postsPath = path.join(__dirname, './posts')
-    const res = {
-      '/': { page: '/' }
-    }
-    getPosts(postsPath).forEach((post) => {
-      res[`/post/${post.name}`] = { page: '/post', query: { post: post.raw } }
+    const posts = getPosts(postsPath)
+    const titles = []
+    let tags = {}
+    posts.forEach((post) => {
+      const { path: absPath, name } = post
+      const tag = path.dirname(absPath.replace(postsPath, ''))
+      if (tag && tag !== '.' && tag !== '/') {
+        tags[tag] = true
+      }
+      titles.push(name)
     })
+    tags = Object.keys(tags).sort((a, b) => a.length - b.length)
+    // index
+    const res = {
+      '/': {
+        page: '/',
+        query: {
+          titles,
+          tags
+        }
+      }
+    }
+    console.log(titles)
+    // tags
+    tags.forEach(tag => {
+      res[`/tags/${tag}`] = {
+        page: '/',
+        query: {
+          titles: posts.filter(post => new RegExp(tag).test(post.path)).map(post => post.name),
+          tags
+        }
+      }
+    })
+    // post
+    posts.forEach((post) => {
+      res[`/post/${post.name}`] = {
+        page: '/post',
+        absPath: `/post/${post.name}`,
+        pathname: `/post/${post.name}`,
+        query: {
+          name: post.name,
+          post: post.raw,
+          tags
+        }
+      }
+    })
+    console.log(res)
     return res
   },
   webpack (config) {

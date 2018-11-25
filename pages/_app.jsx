@@ -14,6 +14,14 @@ export default class MyApp extends App {
     return { pageProps }
   }
 
+  componentDidMount () {
+    const style = document.getElementById('server-side-styles')
+
+    if (style) {
+      style.parentNode.removeChild(style)
+    }
+  }
+
   render () {
     const { Component, pageProps } = this.props
 

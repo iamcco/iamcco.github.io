@@ -1,425 +1,54 @@
 import React, { Component } from 'react'
-import Page from '@/components/page'
+import PropTypes from 'prop-types'
+import injectSheet from 'react-jss'
+import Router from 'next/router'
 
+import Page from '@/components/page'
+import styles from './style'
 import './index.styl'
 
 class Index extends Component {
+  static async getInitialProps (ctx = {}) {
+    let { query: { titles = [], tags = [] } = {} } = ctx
+
+    return {
+      titles,
+      tags
+    }
+  }
+
+  componentDidMount () {
+    window.Router = Router
+  }
+
   render () {
+    const { classes, titles, tags } = this.props
     return (
-      <Page>
-        <section className='index-ctn'>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
-          <section>
-            <h3># 编辑距离算法</h3>
-            <span>> 2018/11/18</span>
-          </section>
+      <Page
+        tags={tags}
+      >
+        <section className={classes.container}>
+          {
+            titles.map(title => (
+              <section>
+                <h3
+                  onClick={() => Router.push(`/post/${title}`)}
+                >
+                  # {title}
+                </h3>
+              </section>
+            ))
+          }
         </section>
       </Page>
     )
   }
 }
 
-export default Index
+Index.propTypes = {
+  classes: PropTypes.object,
+  titles: PropTypes.arrayOf(PropTypes.string),
+  tags: PropTypes.arrayOf(PropTypes.string)
+}
+
+export default injectSheet(styles)(Index)

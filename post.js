@@ -91,6 +91,7 @@ exports.getPosts = function getPosts (dir, options, plugins) {
       list = list.concat(fs.readdirSync(p).map(sub => path.join(p, sub)))
     } else if (state.isFile() && mdExtend.test(p)) {
       posts.push({
+        path: p,
         name: path.basename(p).replace(mdExtend, ''),
         raw: mdRender.render(fs.readFileSync(p, 'utf-8'))
       })
