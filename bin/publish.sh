@@ -13,7 +13,7 @@ rm -rf ./out
 yarn build
 
 cp -r ./public/* ./out/
-cp -r ./public/.* ./out/
+cp ./public/.* ./out/
 
 cd ./out
 
