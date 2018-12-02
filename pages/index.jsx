@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import injectSheet from 'react-jss'
 import Router from 'next/router'
-import Link from 'next/link'
 import Head from 'next/head'
 
 import Page from '@/components/page'
@@ -33,6 +32,7 @@ class Index extends Component {
         </Head>
         <Page
           tags={tags}
+          name={name}
         >
           <section className={classes.container}>
             {
