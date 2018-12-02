@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "next",
     "build": "next build && next export",
-    "publish": "./bin/publish.sh",
+    "post": "./bin/publish.sh",
     "start": "next start",
     "lint:fix": "eslint --fix ./",
     "lint-staged": "yarn lint:fix"
