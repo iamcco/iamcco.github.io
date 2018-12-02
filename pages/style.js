@@ -11,12 +11,12 @@ export default {
       padding: 0,
       margin: 0,
       marginBottom: '24px',
-      fontSize: '30px'
-    },
+      fontSize: '30px',
 
-    '& span': {
-      display: 'inline-block',
-      marginleft: '28px'
+      '@media screen and (max-width: 600px)': {
+        marginbottom: '16px',
+        fontSize: '24px'
+      }
     }
   }
 }

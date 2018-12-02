@@ -24,7 +24,12 @@ export default class JssDocument extends Document {
     return (
       <html>
         <Head>
-          <meta name='viewport' content='width=device-width' />
+          <meta charSet='utf-8' />
+          <meta
+            name='viewport'
+            content='minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no'
+          />
+          <meta name='theme-color' content='#CCBFB2' />
           <style id='server-side-styles'>
             {this.props.registry.toString()}
           </style>

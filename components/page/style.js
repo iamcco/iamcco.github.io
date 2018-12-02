@@ -24,7 +24,13 @@ export default {
     margin: 0,
     padding: 0,
     fontSize: '36px',
-    color: mainText
+    color: mainText,
+
+    '@media screen and (max-width: 600px)': {
+      left: '8px',
+      bottom: '16px',
+      fontSize: '28px'
+    }
   },
 
   nav: {
@@ -34,6 +40,11 @@ export default {
     textAlign: 'right',
     color: mainText,
 
+    '@media screen and (max-width: 600px)': {
+      top: '16px',
+      right: '8px'
+    },
+
     '& h2, h3': {
       padding: 0,
       margin: 0,
@@ -41,12 +52,21 @@ export default {
     },
 
     '& h2': {
-      fontSize: '30px'
+      fontSize: '30px',
+
+      '@media screen and (max-width: 600px)': {
+        fontSize: '24px'
+      }
     },
 
     '& h3': {
       marginTop: '10px',
-      fontSize: '22px'
+      fontSize: '22px',
+
+      '@media screen and (max-width: 600px)': {
+        marginTop: '5px',
+        fontSize: '18px'
+      }
     },
 
     '& a': {
@@ -63,6 +83,10 @@ export default {
     writingMode: 'tb',
     letterSpacing: '10px',
     color: mainWhite,
+
+    '@media screen and (max-width: 600px)': {
+      display: 'none'
+    },
 
     '& a': {
       color: mainWhite,
@@ -83,6 +107,10 @@ export default {
   },
 
   content: {
-    margin: 24
+    margin: 24,
+
+    '@media screen and (max-width: 600px)': {
+      margin: 8
+    }
   }
 }
