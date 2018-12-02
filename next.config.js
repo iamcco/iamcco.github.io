@@ -35,11 +35,11 @@ module.exports = withCSS(withStylus({
       const { path: absPath, name } = post
       const tag = path.dirname(absPath.replace(postsPath, ''))
       if (tag && tag !== '.' && tag !== '/') {
-        tags[tag] = true
+        tags[tag.replace(/^\//, '')] = true
       }
       titles.push(name)
     })
-    tags = Object.keys(tags).sort((a, b) => a.length - b.length)
+    tags = Object.keys(tags).sort((a, b) => b.length - a.length)
     // index
     const res = {
       '/': {
@@ -50,12 +50,12 @@ module.exports = withCSS(withStylus({
         }
       }
     }
-    console.log(titles)
     // tags
     tags.forEach(tag => {
-      res[`/tags/${tag}`] = {
+      res[`/tag/${tag}`] = {
         page: '/',
         query: {
+          name: tag,
           titles: posts.filter(post => new RegExp(tag).test(post.path)).map(post => post.name),
           tags
         }
@@ -74,7 +74,6 @@ module.exports = withCSS(withStylus({
         }
       }
     })
-    console.log(res)
     return res
   },
   webpack (config) {

@@ -1,6 +1,6 @@
 const mainDark = '#333333'
 const mainWhite = '#CCBFB2'
-const mainText = '#76898B'
+const mainText = mainDark
 
 export default {
   container: {
@@ -45,7 +45,13 @@ export default {
     },
 
     '& h3': {
+      marginTop: '10px',
       fontSize: '22px'
+    },
+
+    '& a': {
+      color: mainText,
+      textDecoration: 'none'
     }
   },
 
@@ -56,7 +62,12 @@ export default {
     fontSize: '60px',
     writingMode: 'tb',
     letterSpacing: '10px',
-    color: mainText
+    color: mainWhite,
+
+    '& a': {
+      color: mainWhite,
+      textDecoration: 'none'
+    }
   },
 
   contentCtn: {

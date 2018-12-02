@@ -6,22 +6,34 @@ import styles from './style'
 
 class Page extends React.PureComponent {
   render () {
-    const { children, classes } = this.props
+    const {
+      children,
+      classes,
+      name,
+      tags
+    } = this.props
 
     return (
       <div className={classes.container}>
         <div className={classes.header}>
           <h1 className={classes.title}>
-            深入浅出 RXJS
+            {name || '电助！凉子，看到了吗！'}
           </h1>
           <nav className={classes.nav}>
-            <h2>
-              年糕小豆汤
-            </h2>
-            <h3>技术/编码</h3>
-            <h3>动漫/游戏</h3>
-            <h3>绘画</h3>
-            <h3>关于</h3>
+            <a href='/'>
+              <h2>
+                  年糕小豆汤
+              </h2>
+            </a>
+            {
+              tags.map(tag => (
+                <h3 key={tag}>
+                  <a href={`/tag/${tag}`}>
+                    {tag}
+                  </a>
+                </h3>
+              ))
+            }
           </nav>
         </div>
         <section className={classes.contentCtn}>
@@ -30,7 +42,9 @@ class Page extends React.PureComponent {
           </div>
         </section>
         <div className={classes.logo}>
-          日常
+          <a href='/'>
+            日常
+          </a>
         </div>
       </div>
     )
@@ -39,7 +53,9 @@ class Page extends React.PureComponent {
 
 Page.propTypes = {
   children: PropTypes.element,
-  classes: PropTypes.object
+  classes: PropTypes.object,
+  name: PropTypes.string,
+  tags: PropTypes.array
 }
 
 Page.defaultProps = {

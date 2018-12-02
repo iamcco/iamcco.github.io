@@ -1,6 +1,11 @@
 export default {
   container: {
-    color: '#76898B',
+    color: '#CCBFB2',
+
+    '& a': {
+      color: '#CCBFB2',
+      textDecoration: 'none'
+    },
 
     '& h3': {
       padding: 0,

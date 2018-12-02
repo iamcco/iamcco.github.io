@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Chart from 'chart.js'
-import 'highlight.js/styles/github.css'
+import 'highlight.js/styles/gruvbox-dark.css'
 
 import './style.styl'
 import './katex@0.5.1.css'

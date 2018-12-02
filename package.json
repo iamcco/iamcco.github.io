@@ -7,10 +7,9 @@
   "author": "iamcco <ooiss@qq.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "next ./",
-    "build": "next build",
+    "dev": "next",
+    "build": "next build && next export",
     "start": "next start",
-    "export": "next export",
     "lint:fix": "eslint --fix ./",
     "lint-staged": "yarn lint:fix"
   },
