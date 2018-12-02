@@ -9,3 +9,4 @@
 - game
 - print
 - about
+- plantuml theme
