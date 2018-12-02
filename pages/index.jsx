@@ -39,11 +39,9 @@ class Index extends Component {
               titles.map((title, key) => (
                 <section key={key}>
                   <h3>
-                    <Link href={`/post/${title}`}>
-                      <a>
-                        # {title}
-                      </a>
-                    </Link>
+                    <a href={`/post/${title}`}>
+                      # {title}
+                    </a>
                   </h3>
                 </section>
               ))
