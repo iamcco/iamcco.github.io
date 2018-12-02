@@ -40,6 +40,12 @@ class Page extends React.PureComponent {
           <div className={classes.content}>
             {children}
           </div>
+          <div className={classes.footer}>
+            <a href='http://www.miibeian.gov.cn'>
+                京ICP备15050638号-1
+            </a> & <a href='/'>{new Date().getFullYear()} @ 年糕小豆汤</a>
+
+          </div>
         </section>
         <div className={classes.logo}>
           <a href='/'>

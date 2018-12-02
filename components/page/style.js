@@ -99,7 +99,6 @@ export default {
     left: 0,
     top: 0,
     width: '100vw',
-    borderTop: '1px transparent solid',
     marginTop: '36vh',
     overflowY: 'scroll',
     boxSizing: 'border-box',
@@ -107,10 +106,30 @@ export default {
   },
 
   content: {
-    margin: 24,
+    boxSizing: 'border-box',
+    borderTop: '1px transparent solid',
+    minHeight: '60vh',
+    padding: 24,
 
     '@media screen and (max-width: 600px)': {
-      margin: 8
+      padding: 8
+    }
+  },
+
+  footer: {
+    height: '4vh',
+    textAlign: 'center',
+    lineHeight: '4vh',
+    color: '#504c48',
+
+    '& a': {
+      transition: 'all 2s',
+      color: '#504c48',
+      textDecoration: 'none'
+    },
+
+    '& a:hover': {
+      color: mainWhite
     }
   }
 }
