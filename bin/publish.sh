@@ -6,6 +6,7 @@ set -o pipefail
 # goto root directory
 cd "$(dirname "$0")/.."
 
+rm -rf ./.next
 rm -rf ./out
 
 # build page
