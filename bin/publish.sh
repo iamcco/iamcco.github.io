@@ -19,7 +19,7 @@ cd ./out
 
 git init
 
-git remote add origin https://github.com/iamcco/iamcco.github.io.git
+git remote add origin git@github.com:iamcco/iamcco.github.io.git
 
 git add .
 
