@@ -112,7 +112,8 @@ export default {
     padding: 24,
 
     '@media screen and (max-width: 600px)': {
-      padding: 8
+      padding: 8,
+      paddintTop: 24
     }
   },
 
