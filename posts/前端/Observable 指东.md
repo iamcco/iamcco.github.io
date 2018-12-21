@@ -4,7 +4,7 @@ RxJS 的基础：Observable
 
 - Observable 可观察对象 (本次的主角，一个惰性的值的集合，同步，异步)
 - Observer 观察者 (next/error/complete 回调函数集合，用来监听 Observable 的值)
-- Subscription 订阅 (相当于 Observable 流的具柄)
+- Subscription 订阅 (相当于 Observable 流的句柄)
 - Operators 操作符 (map/filter/retryWhen/...)
 
 Observable 的 **生命周期**:
