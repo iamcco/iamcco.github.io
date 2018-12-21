@@ -1,8 +1,6 @@
-RxJS 的核心：Observable
+RxJS 的基础：Observable
 
-可以毫不负责的说，RxJS 的一切都建立在 Observable 之上。
-
-关于 Observable 必须要知道的几个基本概念：
+关于 Observable 的几个基本概念：
 
 - Observable 可观察对象 (本次的主角，一个惰性的值的集合，同步，异步)
 - Observer 观察者 (next/error/complete 回调函数集合，用来监听 Observable 的值)
@@ -20,26 +18,24 @@ Observable 的 **生命周期**:
 4. 清理 Observable
    > subscription.unsubscribe
 
-RxJS 的所有操作符，一切的骚操作等都是围着这几个生命周期展开的，而真正拉动 Observable 齿轮的主要关注点在于 **订阅** 和 **执行**。
-
 **订阅 执行**：
 
 ```javascript
-function subscriber(observer) {
-  observer.next(1);
-  observer.next(2);
-  observer.next(3);
+function subscriber (observer) {
+  observer.next(1)
+  observer.next(2)
+  observer.next(3)
 }
 
-const observable = Rx.Observable.create(subscriber);
+const observable = Rx.Observable.create(subscriber)
 
 const observer = {
   next: res => console.log(`next: ${res}`),
   error: err => console.error(`error: ${err}`),
-  complete: () => console.log('done'),
+  complete: () => console.log('done')
 }
 
-observable.subscribe(observer);
+observable.subscribe(observer)
 ```
 
 输出：
@@ -52,36 +48,42 @@ observable.subscribe(observer);
 
 上面的代码中 `subscribe(observer)` 就是订阅部分，而 `subscriber()` 就是执行部分。
 但是在上面的代码中，我们只是声明了 `subscriber` 函数，并作为参数传给了 `create` ，
-代码没有进行 `subscriber()` 调用，所以这个调用只能是 Observable 内部进行的。要清楚
-Observable 是如何联动起来的，最简单的方法就看 RxJS 源码。
+代码没有进行 `subscriber()` 调用，所以这个调用只能是 Observable 内部进行的。
 
 下面是一个非常简单的 Observable 实现:
 
-```typescript
+```javascript
 class Observable {
     static create(subscriber) {
         return new Observable(subscriber)
     }
 
-    constructor(private subscriber) {}
+    constructor(subscriber) {
+        this.subscriber = subscriber
+    }
+
+    pipe(...operators) {
+        return operators.reduce((preObservable, nextOperator) => nextOperator(preObservable), this)
+    }
 
     subscribe(observer) {
         return this.subscriber(observer)
     }
 }
+
 ```
 
 使用：
 
-```typescript
+```javascript
 const observable = Observable.create(observer => {
-    observer.next(1)
-    observer.next(2)
-    observer.next(3)
+  observer.next(1)
+  observer.next(2)
+  observer.next(3)
 })
 
 const subscription = observable.subscribe({
-    next: res => console.log(res)
+  next: res => console.log(res)
 })
 ```
 
@@ -102,50 +104,60 @@ Observer 的桥梁。如果没有 `subscribe`，上面的代码可以更简单�
 
 ```javascript
 const subscriber = observer => {
-    observer.next(1)
-    observer.next(2)
-    observer.next(3)
+  observer.next(1)
+  observer.next(2)
+  observer.next(3)
 }
 
 const observer = {
-    next: res => console.log(res)
+  next: res => console.log(res)
 }
 
 subscriber(observer)
 ```
 
-而 `subscribe` 就是把 `subscriber(observer)` 这一步连接了起来。到这里估计会有疑问，
-就是为啥 Observable 要设计了 `subscribe` 这么一环。明明非常简单的代码，
-还搞出那么多概念。要搞清楚 Observable 为啥要搞这么多幺蛾子，可能还需要再看一下有关
-Observable 的描述：Observable 是一个可观察对象。
+而 `subscribe` 就是把 `subscriber(observer)` 这一步连接了起来。
 
-惰性，只有观察了，才会流动，有点像唯心主义，只有你看了它，它才会存在（流动）
+在看会之前的概念：Observable 是一个可观察对象。
 
-创建类操作符，一些常用模型的建立
+惰性，只有观察了，才会流动
 
-操作符，通过组合操作，是灵活性达到极致
+有了这些特性就可以把一些常用模型的建立操作符，通过组合操作实现各种逻辑
 
-实现简单的操作符 map
+实现简单的操作符
 
 ```javascript
-Observable.prototype.map = function(resolve) {
-    return new Observable(observer =>{
-        return this.subscribe({
-            next: res => observer.next(resolve(res))
-        })
+function startWith (value) {
+  return (observable) => {
+    return new Observable(observer => {
+      observer.next(value)
+      return observable.subscribe({
+        next: res => observer.next(res)
+      })
     })
+  }
+}
+
+function map (fn) {
+  return (observable) => {
+    return new Observable(observer => {
+      return observable.subscribe({
+        next: res => observer.next(fn(res))
+      })
+    })
+  }
 }
 ```
 
-实现其他复杂的操作符 retryWhen startWith
 
-Observable 终结状态: error complete
+一个完整的 Observable 还需要关注的点：
 
-Observable 的另一个状态：取消订阅 unsubscribe
+- Observable 终结状态: error complete
+- Observable 的另一个状态：取消订阅 unsubscribe
 
-observer 包装
+### Observable 提案:
 
-### Observable API
+Observable API
 
 ```typescript
 interface Observable {
@@ -188,6 +200,5 @@ function SubscriberFunction(observer: SubscriptionObserver) : (void => void)|Sub
 
 ### Reference
 
-- 冷 Observable 热 Observable
 - [Symbol](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol)
 - [Observable](https://tc39.github.io/proposal-observable/)
