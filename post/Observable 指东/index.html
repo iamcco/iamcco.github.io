@@ -1,0 +1,307 @@
+<!DOCTYPE html><html><head><meta charSet="utf-8" class="next-head"/><link rel="shortcut icon" type="image/ico" href="/_next/static/assets/favicon@1XoaNi6d.ico" class="next-head"/><title class="next-head">「Observable 指东-日常」</title><link rel="preload" href="/_next/static/jpbKUD7AYBmTrqkCoq~uJ/pages/post.js" as="script"/><link rel="preload" href="/_next/static/jpbKUD7AYBmTrqkCoq~uJ/pages/_app.js" as="script"/><link rel="preload" href="/_next/static/jpbKUD7AYBmTrqkCoq~uJ/pages/_error.js" as="script"/><link rel="preload" href="/_next/static/runtime/webpack-89179faa512dd01fbb62.js" as="script"/><link rel="preload" href="/_next/static/chunks/commons.8aeda863d6c53958c0af.js" as="script"/><link rel="preload" href="/_next/static/chunks/styles.d41130c6e010994f16ae.js" as="script"/><link rel="preload" href="/_next/static/runtime/main-8fc375480079f7d43d7c.js" as="script"/><link rel="stylesheet" href="/_next/static/css/styles.d02a4e39.chunk.css"/><meta charSet="utf-8"/><meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no"/><meta name="theme-color" content="#CCBFB2"/><style id="server-side-styles">.c011 {
+  width: 100vw;
+  height: 100vh;
+}
+.c012 {
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 36vh;
+  position: fixed;
+  background-color: #CCBFB2;
+}
+.c013 {
+  left: 24px;
+  color: #333333;
+  bottom: 24px;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  font-size: 36px;
+}
+@media screen and (max-width: 600px) {
+  .c013 {
+    left: 8px;
+    bottom: 16px;
+    font-size: 28px;
+  }
+}
+.c014 {
+  top: 24px;
+  right: 24px;
+  color: #333333;
+  position: absolute;
+  text-align: right;
+}
+@media screen and (max-width: 600px) {
+  .c014 {
+    top: 16px;
+    right: 8px;
+  }
+}
+.c014 h2, .c014 h3 {
+  margin: 0;
+  padding: 0;
+  marginbottom: 16px;
+}
+.c014 h2 {
+  font-size: 30px;
+}
+.c014 h3 {
+  font-size: 22px;
+  margin-top: 10px;
+}
+.c014 a {
+  color: #333333;
+  text-decoration: none;
+}
+@media screen and (max-width: 600px) {
+  .c014 h3 {
+    font-size: 18px;
+    margin-top: 5px;
+  }
+}
+@media screen and (max-width: 600px) {
+  .c014 h2 {
+    font-size: 24px;
+  }
+}
+.c015 {
+  right: 16px;
+  color: #CCBFB2;
+  bottom: 16px;
+  position: fixed;
+  font-size: 60px;
+  writing-mode: tb;
+  letter-spacing: 10px;
+}
+@media screen and (max-width: 600px) {
+  .c015 {
+    display: none;
+  }
+}
+.c015 a {
+  color: #CCBFB2;
+  text-decoration: none;
+}
+.c016 {
+  top: 0;
+  left: 0;
+  width: 100vw;
+  position: absolute;
+  margin-top: 36vh;
+  overflow-y: scroll;
+  box-sizing: border-box;
+  background-color: #333333;
+}
+.c017 {
+  padding: 24px;
+  box-sizing: border-box;
+  border-top: 1px transparent solid;
+  min-height: 60vh;
+}
+@media screen and (max-width: 600px) {
+  .c017 {
+    padding: 8px;
+    padding-top: 24px;
+  }
+}
+.c018 {
+  color: #504c48;
+  height: 4vh;
+  text-align: center;
+  line-height: 4vh;
+}
+.c018 a {
+  color: #504c48;
+  transition: all 2s;
+  text-decoration: none;
+}
+.c018 a:hover {
+  color: #CCBFB2;
+}</style></head><body><div id="__next"><div class="c011"><div class="c012"><h1 class="c013">Observable 指东</h1><nav class="c014"><a href="/"><h2>年糕小豆汤</h2></a><h3><a href="/tag/算法">算法</a></h3><h3><a href="/tag/前端">前端</a></h3></nav></div><section class="c016"><div class="c017"><section class="markdown-body"><p>RxJS 的基础：Observable</p>
+<p>关于 Observable 的几个基本概念：</p>
+<ul>
+<li>Observable 可观察对象 (本次的主角，一个惰性的值的集合，同步，异步)</li>
+<li>Observer 观察者 (next/error/complete 回调函数集合，用来监听 Observable 的值)</li>
+<li>Subscription 订阅 (相当于 Observable 流的句柄)</li>
+<li>Operators 操作符 (map/filter/retryWhen/…)</li>
+</ul>
+<p>Observable 的 <strong>生命周期</strong>:</p>
+<ol>
+<li>创建 Observable
+<blockquote>
+<p>new Observable(subscriber) 或 Observable.create(subscriber)</p>
+</blockquote>
+</li>
+<li>订阅 Observable
+<blockquote>
+<p>observable.subscribe(Observer)</p>
+</blockquote>
+</li>
+<li>执行 Observable
+<blockquote>
+<p>subscriber</p>
+</blockquote>
+</li>
+<li>清理 Observable
+<blockquote>
+<p>subscription.unsubscribe</p>
+</blockquote>
+</li>
+</ol>
+<p><strong>订阅 执行</strong>：</p>
+<pre><code class="language-javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">subscriber</span> (<span class="hljs-params">observer</span>) </span>{
+  observer.next(<span class="hljs-number">1</span>)
+  observer.next(<span class="hljs-number">2</span>)
+  observer.next(<span class="hljs-number">3</span>)
+}
+
+<span class="hljs-keyword">const</span> observable = Rx.Observable.create(subscriber)
+
+<span class="hljs-keyword">const</span> observer = {
+  <span class="hljs-attr">next</span>: <span class="hljs-function"><span class="hljs-params">res</span> =&gt;</span> <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`next: <span class="hljs-subst">${res}</span>`</span>),
+  <span class="hljs-attr">error</span>: <span class="hljs-function"><span class="hljs-params">err</span> =&gt;</span> <span class="hljs-built_in">console</span>.error(<span class="hljs-string">`error: <span class="hljs-subst">${err}</span>`</span>),
+  <span class="hljs-attr">complete</span>: <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'done'</span>)
+}
+
+observable.subscribe(observer)
+</code></pre>
+<p>输出：</p>
+<pre><code><span class="hljs-number">1</span>
+<span class="hljs-number">2</span>
+<span class="hljs-number">3</span>
+</code></pre>
+<p>上面的代码中 <code>subscribe(observer)</code> 就是订阅部分，而 <code>subscriber()</code> 就是执行部分。
+但是在上面的代码中，我们只是声明了 <code>subscriber</code> 函数，并作为参数传给了 <code>create</code> ，
+代码没有进行 <code>subscriber()</code> 调用，所以这个调用只能是 Observable 内部进行的。</p>
+<p>下面是一个非常简单的 Observable 实现:</p>
+<pre><code class="language-javascript"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Observable</span> </span>{
+    <span class="hljs-keyword">static</span> create(subscriber) {
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> Observable(subscriber)
+    }
+
+    <span class="hljs-keyword">constructor</span>(subscriber) {
+        <span class="hljs-keyword">this</span>.subscriber = subscriber
+    }
+
+    pipe(...operators) {
+        <span class="hljs-keyword">return</span> operators.reduce(<span class="hljs-function">(<span class="hljs-params">preObservable, nextOperator</span>) =&gt;</span> nextOperator(preObservable), <span class="hljs-keyword">this</span>)
+    }
+
+    subscribe(observer) {
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.subscriber(observer)
+    }
+}
+
+</code></pre>
+<p>使用：</p>
+<pre><code class="language-javascript"><span class="hljs-keyword">const</span> observable = Observable.create(<span class="hljs-function"><span class="hljs-params">observer</span> =&gt;</span> {
+  observer.next(<span class="hljs-number">1</span>)
+  observer.next(<span class="hljs-number">2</span>)
+  observer.next(<span class="hljs-number">3</span>)
+})
+
+<span class="hljs-keyword">const</span> subscription = observable.subscribe({
+  <span class="hljs-attr">next</span>: <span class="hljs-function"><span class="hljs-params">res</span> =&gt;</span> <span class="hljs-built_in">console</span>.log(res)
+})
+</code></pre>
+<p>输出：</p>
+<pre><code><span class="hljs-number">1</span>
+<span class="hljs-number">2</span>
+<span class="hljs-number">3</span>
+</code></pre>
+<p>可以看到，一个超级简单的 Observable 就实现了，而且主要实现了 <strong>订阅</strong> 和 <strong>执行</strong>。
+由于代码异常简单，所以我们可以非常清楚的看到，所谓订阅/执行，就是使用 Observer
+调用 <code>subscribe</code> 订阅函数，而 <code>subscribe</code> 再拿 Observer 调用 <code>subscriber</code>，之后
+<code>subscriber</code> 调用 <code>Observer.next</code> 最终观察者获得了它所监听的 Observable
+的值（1，2，3），到这里一条<strong>流</strong>就形成了。而 <code>subscribe</code> 就是 <code>subscriber</code> 到
+Observer 的桥梁。如果没有 <code>subscribe</code>，上面的代码可以更简单的写成下面这个样子：</p>
+<pre><code class="language-javascript"><span class="hljs-keyword">const</span> subscriber = <span class="hljs-function"><span class="hljs-params">observer</span> =&gt;</span> {
+  observer.next(<span class="hljs-number">1</span>)
+  observer.next(<span class="hljs-number">2</span>)
+  observer.next(<span class="hljs-number">3</span>)
+}
+
+<span class="hljs-keyword">const</span> observer = {
+  <span class="hljs-attr">next</span>: <span class="hljs-function"><span class="hljs-params">res</span> =&gt;</span> <span class="hljs-built_in">console</span>.log(res)
+}
+
+subscriber(observer)
+</code></pre>
+<p>而 <code>subscribe</code> 就是把 <code>subscriber(observer)</code> 这一步连接了起来。</p>
+<p>在看会之前的概念：Observable 是一个可观察对象。</p>
+<p>惰性，只有观察了，才会流动</p>
+<p>有了这些特性就可以把一些常用模型的建立操作符，通过组合操作实现各种逻辑</p>
+<p>实现简单的操作符</p>
+<pre><code class="language-javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">startWith</span> (<span class="hljs-params">value</span>) </span>{
+  <span class="hljs-keyword">return</span> <span class="hljs-function">(<span class="hljs-params">observable</span>) =&gt;</span> {
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> Observable(<span class="hljs-function"><span class="hljs-params">observer</span> =&gt;</span> {
+      observer.next(value)
+      <span class="hljs-keyword">return</span> observable.subscribe({
+        <span class="hljs-attr">next</span>: <span class="hljs-function"><span class="hljs-params">res</span> =&gt;</span> observer.next(res)
+      })
+    })
+  }
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">map</span> (<span class="hljs-params">fn</span>) </span>{
+  <span class="hljs-keyword">return</span> <span class="hljs-function">(<span class="hljs-params">observable</span>) =&gt;</span> {
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> Observable(<span class="hljs-function"><span class="hljs-params">observer</span> =&gt;</span> {
+      <span class="hljs-keyword">return</span> observable.subscribe({
+        <span class="hljs-attr">next</span>: <span class="hljs-function"><span class="hljs-params">res</span> =&gt;</span> observer.next(fn(res))
+      })
+    })
+  }
+}
+</code></pre>
+<p>一个完整的 Observable 还需要关注的点：</p>
+<ul>
+<li>Observable 终结状态: error complete</li>
+<li>Observable 的另一个状态：取消订阅 unsubscribe</li>
+</ul>
+<h3>Observable 提案:</h3>
+<p>Observable API</p>
+<pre><code class="language-typescript"><span class="hljs-keyword">interface</span> Observable {
+
+    <span class="hljs-keyword">constructor</span>(<span class="hljs-params">subscriber : SubscriberFunction</span>);
+
+    // 订阅接收一个 Observer 观察者对象
+    subscribe(<span class="hljs-params">observer : Observer</span>) : Subscription;
+
+    // 订阅接收函数:
+    // onNext 对应 Observer.next
+    // onError 对应 Observer.error
+    // onComplete 对应 Observer.complete
+    subscribe(<span class="hljs-params">onNext : <span class="hljs-built_in">Function</span>,
+              onError? : <span class="hljs-built_in">Function</span>,
+              onComplete? : <span class="hljs-built_in">Function</span></span>) : Subscription;
+
+    // 返回 Observable 自身
+    [Symbol.observable](<span class="hljs-params"></span>) : Observable;
+
+    // 把参数转换为同步 Observable
+    static of(<span class="hljs-params">...items</span>) : Observable;
+
+    // 把 Observable 或 可迭代对象转化为 Observable
+    static from(<span class="hljs-params">observable</span>) : Observable;
+
+}
+
+interface Subscription {
+
+    <span class="hljs-comment">// 取消订阅</span>
+    unsubscribe() : <span class="hljs-built_in">void</span>;
+
+    <span class="hljs-comment">// 判断流是否已经终止</span>
+    <span class="hljs-keyword">get</span> closed() : <span class="hljs-built_in">Boolean</span>;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">SubscriberFunction</span>(<span class="hljs-params">observer: SubscriptionObserver</span>) : (<span class="hljs-params"><span class="hljs-built_in">void</span> =&gt; <span class="hljs-built_in">void</span></span>)|<span class="hljs-title">Subscription</span></span>;
+</code></pre>
+<h3>Reference</h3>
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol">Symbol</a></li>
+<li><a href="https://tc39.github.io/proposal-observable/">Observable</a></li>
+</ul>
+</section></div><div class="c018"><a href="http://www.miibeian.gov.cn">京ICP备15050638号-1</a> &amp; <a href="/">2018<!-- --> @ 年糕小豆汤</a></div></section><div class="c015"><a href="/">日常</a></div></div></div><script>__NEXT_DATA__ = {"props":{"pageProps":{"post":"\u003cp\u003eRxJS 的基础：Observable\u003c/p\u003e\n\u003cp\u003e关于 Observable 的几个基本概念：\u003c/p\u003e\n\u003cul\u003e\n\u003cli\u003eObservable 可观察对象 (本次的主角，一个惰性的值的集合，同步，异步)\u003c/li\u003e\n\u003cli\u003eObserver 观察者 (next/error/complete 回调函数集合，用来监听 Observable 的值)\u003c/li\u003e\n\u003cli\u003eSubscription 订阅 (相当于 Observable 流的句柄)\u003c/li\u003e\n\u003cli\u003eOperators 操作符 (map/filter/retryWhen/…)\u003c/li\u003e\n\u003c/ul\u003e\n\u003cp\u003eObservable 的 \u003cstrong\u003e生命周期\u003c/strong\u003e:\u003c/p\u003e\n\u003col\u003e\n\u003cli\u003e创建 Observable\n\u003cblockquote\u003e\n\u003cp\u003enew Observable(subscriber) 或 Observable.create(subscriber)\u003c/p\u003e\n\u003c/blockquote\u003e\n\u003c/li\u003e\n\u003cli\u003e订阅 Observable\n\u003cblockquote\u003e\n\u003cp\u003eobservable.subscribe(Observer)\u003c/p\u003e\n\u003c/blockquote\u003e\n\u003c/li\u003e\n\u003cli\u003e执行 Observable\n\u003cblockquote\u003e\n\u003cp\u003esubscriber\u003c/p\u003e\n\u003c/blockquote\u003e\n\u003c/li\u003e\n\u003cli\u003e清理 Observable\n\u003cblockquote\u003e\n\u003cp\u003esubscription.unsubscribe\u003c/p\u003e\n\u003c/blockquote\u003e\n\u003c/li\u003e\n\u003c/ol\u003e\n\u003cp\u003e\u003cstrong\u003e订阅 执行\u003c/strong\u003e：\u003c/p\u003e\n\u003cpre\u003e\u003ccode class=\"language-javascript\"\u003e\u003cspan class=\"hljs-function\"\u003e\u003cspan class=\"hljs-keyword\"\u003efunction\u003c/span\u003e \u003cspan class=\"hljs-title\"\u003esubscriber\u003c/span\u003e (\u003cspan class=\"hljs-params\"\u003eobserver\u003c/span\u003e) \u003c/span\u003e{\n  observer.next(\u003cspan class=\"hljs-number\"\u003e1\u003c/span\u003e)\n  observer.next(\u003cspan class=\"hljs-number\"\u003e2\u003c/span\u003e)\n  observer.next(\u003cspan class=\"hljs-number\"\u003e3\u003c/span\u003e)\n}\n\n\u003cspan class=\"hljs-keyword\"\u003econst\u003c/span\u003e observable = Rx.Observable.create(subscriber)\n\n\u003cspan class=\"hljs-keyword\"\u003econst\u003c/span\u003e observer = {\n  \u003cspan class=\"hljs-attr\"\u003enext\u003c/span\u003e: \u003cspan class=\"hljs-function\"\u003e\u003cspan class=\"hljs-params\"\u003eres\u003c/span\u003e =\u0026gt;\u003c/span\u003e \u003cspan class=\"hljs-built_in\"\u003econsole\u003c/span\u003e.log(\u003cspan class=\"hljs-string\"\u003e`next: \u003cspan class=\"hljs-subst\"\u003e${res}\u003c/span\u003e`\u003c/span\u003e),\n  \u003cspan class=\"hljs-attr\"\u003eerror\u003c/span\u003e: \u003cspan class=\"hljs-function\"\u003e\u003cspan class=\"hljs-params\"\u003eerr\u003c/span\u003e =\u0026gt;\u003c/span\u003e \u003cspan class=\"hljs-built_in\"\u003econsole\u003c/span\u003e.error(\u003cspan class=\"hljs-string\"\u003e`error: \u003cspan class=\"hljs-subst\"\u003e${err}\u003c/span\u003e`\u003c/span\u003e),\n  \u003cspan class=\"hljs-attr\"\u003ecomplete\u003c/span\u003e: \u003cspan class=\"hljs-function\"\u003e\u003cspan class=\"hljs-params\"\u003e()\u003c/span\u003e =\u0026gt;\u003c/span\u003e \u003cspan class=\"hljs-built_in\"\u003econsole\u003c/span\u003e.log(\u003cspan class=\"hljs-string\"\u003e'done'\u003c/span\u003e)\n}\n\nobservable.subscribe(observer)\n\u003c/code\u003e\u003c/pre\u003e\n\u003cp\u003e输出：\u003c/p\u003e\n\u003cpre\u003e\u003ccode\u003e\u003cspan class=\"hljs-number\"\u003e1\u003c/span\u003e\n\u003cspan class=\"hljs-number\"\u003e2\u003c/span\u003e\n\u003cspan class=\"hljs-number\"\u003e3\u003c/span\u003e\n\u003c/code\u003e\u003c/pre\u003e\n\u003cp\u003e上面的代码中 \u003ccode\u003esubscribe(observer)\u003c/code\u003e 就是订阅部分，而 \u003ccode\u003esubscriber()\u003c/code\u003e 就是执行部分。\n但是在上面的代码中，我们只是声明了 \u003ccode\u003esubscriber\u003c/code\u003e 函数，并作为参数传给了 \u003ccode\u003ecreate\u003c/code\u003e ，\n代码没有进行 \u003ccode\u003esubscriber()\u003c/code\u003e 调用，所以这个调用只能是 Observable 内部进行的。\u003c/p\u003e\n\u003cp\u003e下面是一个非常简单的 Observable 实现:\u003c/p\u003e\n\u003cpre\u003e\u003ccode class=\"language-javascript\"\u003e\u003cspan class=\"hljs-class\"\u003e\u003cspan class=\"hljs-keyword\"\u003eclass\u003c/span\u003e \u003cspan class=\"hljs-title\"\u003eObservable\u003c/span\u003e \u003c/span\u003e{\n    \u003cspan class=\"hljs-keyword\"\u003estatic\u003c/span\u003e create(subscriber) {\n        \u003cspan class=\"hljs-keyword\"\u003ereturn\u003c/span\u003e \u003cspan class=\"hljs-keyword\"\u003enew\u003c/span\u003e Observable(subscriber)\n    }\n\n    \u003cspan class=\"hljs-keyword\"\u003econstructor\u003c/span\u003e(subscriber) {\n        \u003cspan class=\"hljs-keyword\"\u003ethis\u003c/span\u003e.subscriber = subscriber\n    }\n\n    pipe(...operators) {\n        \u003cspan class=\"hljs-keyword\"\u003ereturn\u003c/span\u003e operators.reduce(\u003cspan class=\"hljs-function\"\u003e(\u003cspan class=\"hljs-params\"\u003epreObservable, nextOperator\u003c/span\u003e) =\u0026gt;\u003c/span\u003e nextOperator(preObservable), \u003cspan class=\"hljs-keyword\"\u003ethis\u003c/span\u003e)\n    }\n\n    subscribe(observer) {\n        \u003cspan class=\"hljs-keyword\"\u003ereturn\u003c/span\u003e \u003cspan class=\"hljs-keyword\"\u003ethis\u003c/span\u003e.subscriber(observer)\n    }\n}\n\n\u003c/code\u003e\u003c/pre\u003e\n\u003cp\u003e使用：\u003c/p\u003e\n\u003cpre\u003e\u003ccode class=\"language-javascript\"\u003e\u003cspan class=\"hljs-keyword\"\u003econst\u003c/span\u003e observable = Observable.create(\u003cspan class=\"hljs-function\"\u003e\u003cspan class=\"hljs-params\"\u003eobserver\u003c/span\u003e =\u0026gt;\u003c/span\u003e {\n  observer.next(\u003cspan class=\"hljs-number\"\u003e1\u003c/span\u003e)\n  observer.next(\u003cspan class=\"hljs-number\"\u003e2\u003c/span\u003e)\n  observer.next(\u003cspan class=\"hljs-number\"\u003e3\u003c/span\u003e)\n})\n\n\u003cspan class=\"hljs-keyword\"\u003econst\u003c/span\u003e subscription = observable.subscribe({\n  \u003cspan class=\"hljs-attr\"\u003enext\u003c/span\u003e: \u003cspan class=\"hljs-function\"\u003e\u003cspan class=\"hljs-params\"\u003eres\u003c/span\u003e =\u0026gt;\u003c/span\u003e \u003cspan class=\"hljs-built_in\"\u003econsole\u003c/span\u003e.log(res)\n})\n\u003c/code\u003e\u003c/pre\u003e\n\u003cp\u003e输出：\u003c/p\u003e\n\u003cpre\u003e\u003ccode\u003e\u003cspan class=\"hljs-number\"\u003e1\u003c/span\u003e\n\u003cspan class=\"hljs-number\"\u003e2\u003c/span\u003e\n\u003cspan class=\"hljs-number\"\u003e3\u003c/span\u003e\n\u003c/code\u003e\u003c/pre\u003e\n\u003cp\u003e可以看到，一个超级简单的 Observable 就实现了，而且主要实现了 \u003cstrong\u003e订阅\u003c/strong\u003e 和 \u003cstrong\u003e执行\u003c/strong\u003e。\n由于代码异常简单，所以我们可以非常清楚的看到，所谓订阅/执行，就是使用 Observer\n调用 \u003ccode\u003esubscribe\u003c/code\u003e 订阅函数，而 \u003ccode\u003esubscribe\u003c/code\u003e 再拿 Observer 调用 \u003ccode\u003esubscriber\u003c/code\u003e，之后\n\u003ccode\u003esubscriber\u003c/code\u003e 调用 \u003ccode\u003eObserver.next\u003c/code\u003e 最终观察者获得了它所监听的 Observable\n的值（1，2，3），到这里一条\u003cstrong\u003e流\u003c/strong\u003e就形成了。而 \u003ccode\u003esubscribe\u003c/code\u003e 就是 \u003ccode\u003esubscriber\u003c/code\u003e 到\nObserver 的桥梁。如果没有 \u003ccode\u003esubscribe\u003c/code\u003e，上面的代码可以更简单的写成下面这个样子：\u003c/p\u003e\n\u003cpre\u003e\u003ccode class=\"language-javascript\"\u003e\u003cspan class=\"hljs-keyword\"\u003econst\u003c/span\u003e subscriber = \u003cspan class=\"hljs-function\"\u003e\u003cspan class=\"hljs-params\"\u003eobserver\u003c/span\u003e =\u0026gt;\u003c/span\u003e {\n  observer.next(\u003cspan class=\"hljs-number\"\u003e1\u003c/span\u003e)\n  observer.next(\u003cspan class=\"hljs-number\"\u003e2\u003c/span\u003e)\n  observer.next(\u003cspan class=\"hljs-number\"\u003e3\u003c/span\u003e)\n}\n\n\u003cspan class=\"hljs-keyword\"\u003econst\u003c/span\u003e observer = {\n  \u003cspan class=\"hljs-attr\"\u003enext\u003c/span\u003e: \u003cspan class=\"hljs-function\"\u003e\u003cspan class=\"hljs-params\"\u003eres\u003c/span\u003e =\u0026gt;\u003c/span\u003e \u003cspan class=\"hljs-built_in\"\u003econsole\u003c/span\u003e.log(res)\n}\n\nsubscriber(observer)\n\u003c/code\u003e\u003c/pre\u003e\n\u003cp\u003e而 \u003ccode\u003esubscribe\u003c/code\u003e 就是把 \u003ccode\u003esubscriber(observer)\u003c/code\u003e 这一步连接了起来。\u003c/p\u003e\n\u003cp\u003e在看会之前的概念：Observable 是一个可观察对象。\u003c/p\u003e\n\u003cp\u003e惰性，只有观察了，才会流动\u003c/p\u003e\n\u003cp\u003e有了这些特性就可以把一些常用模型的建立操作符，通过组合操作实现各种逻辑\u003c/p\u003e\n\u003cp\u003e实现简单的操作符\u003c/p\u003e\n\u003cpre\u003e\u003ccode class=\"language-javascript\"\u003e\u003cspan class=\"hljs-function\"\u003e\u003cspan class=\"hljs-keyword\"\u003efunction\u003c/span\u003e \u003cspan class=\"hljs-title\"\u003estartWith\u003c/span\u003e (\u003cspan class=\"hljs-params\"\u003evalue\u003c/span\u003e) \u003c/span\u003e{\n  \u003cspan class=\"hljs-keyword\"\u003ereturn\u003c/span\u003e \u003cspan class=\"hljs-function\"\u003e(\u003cspan class=\"hljs-params\"\u003eobservable\u003c/span\u003e) =\u0026gt;\u003c/span\u003e {\n    \u003cspan class=\"hljs-keyword\"\u003ereturn\u003c/span\u003e \u003cspan class=\"hljs-keyword\"\u003enew\u003c/span\u003e Observable(\u003cspan class=\"hljs-function\"\u003e\u003cspan class=\"hljs-params\"\u003eobserver\u003c/span\u003e =\u0026gt;\u003c/span\u003e {\n      observer.next(value)\n      \u003cspan class=\"hljs-keyword\"\u003ereturn\u003c/span\u003e observable.subscribe({\n        \u003cspan class=\"hljs-attr\"\u003enext\u003c/span\u003e: \u003cspan class=\"hljs-function\"\u003e\u003cspan class=\"hljs-params\"\u003eres\u003c/span\u003e =\u0026gt;\u003c/span\u003e observer.next(res)\n      })\n    })\n  }\n}\n\n\u003cspan class=\"hljs-function\"\u003e\u003cspan class=\"hljs-keyword\"\u003efunction\u003c/span\u003e \u003cspan class=\"hljs-title\"\u003emap\u003c/span\u003e (\u003cspan class=\"hljs-params\"\u003efn\u003c/span\u003e) \u003c/span\u003e{\n  \u003cspan class=\"hljs-keyword\"\u003ereturn\u003c/span\u003e \u003cspan class=\"hljs-function\"\u003e(\u003cspan class=\"hljs-params\"\u003eobservable\u003c/span\u003e) =\u0026gt;\u003c/span\u003e {\n    \u003cspan class=\"hljs-keyword\"\u003ereturn\u003c/span\u003e \u003cspan class=\"hljs-keyword\"\u003enew\u003c/span\u003e Observable(\u003cspan class=\"hljs-function\"\u003e\u003cspan class=\"hljs-params\"\u003eobserver\u003c/span\u003e =\u0026gt;\u003c/span\u003e {\n      \u003cspan class=\"hljs-keyword\"\u003ereturn\u003c/span\u003e observable.subscribe({\n        \u003cspan class=\"hljs-attr\"\u003enext\u003c/span\u003e: \u003cspan class=\"hljs-function\"\u003e\u003cspan class=\"hljs-params\"\u003eres\u003c/span\u003e =\u0026gt;\u003c/span\u003e observer.next(fn(res))\n      })\n    })\n  }\n}\n\u003c/code\u003e\u003c/pre\u003e\n\u003cp\u003e一个完整的 Observable 还需要关注的点：\u003c/p\u003e\n\u003cul\u003e\n\u003cli\u003eObservable 终结状态: error complete\u003c/li\u003e\n\u003cli\u003eObservable 的另一个状态：取消订阅 unsubscribe\u003c/li\u003e\n\u003c/ul\u003e\n\u003ch3\u003eObservable 提案:\u003c/h3\u003e\n\u003cp\u003eObservable API\u003c/p\u003e\n\u003cpre\u003e\u003ccode class=\"language-typescript\"\u003e\u003cspan class=\"hljs-keyword\"\u003einterface\u003c/span\u003e Observable {\n\n    \u003cspan class=\"hljs-keyword\"\u003econstructor\u003c/span\u003e(\u003cspan class=\"hljs-params\"\u003esubscriber : SubscriberFunction\u003c/span\u003e);\n\n    // 订阅接收一个 Observer 观察者对象\n    subscribe(\u003cspan class=\"hljs-params\"\u003eobserver : Observer\u003c/span\u003e) : Subscription;\n\n    // 订阅接收函数:\n    // onNext 对应 Observer.next\n    // onError 对应 Observer.error\n    // onComplete 对应 Observer.complete\n    subscribe(\u003cspan class=\"hljs-params\"\u003eonNext : \u003cspan class=\"hljs-built_in\"\u003eFunction\u003c/span\u003e,\n              onError? : \u003cspan class=\"hljs-built_in\"\u003eFunction\u003c/span\u003e,\n              onComplete? : \u003cspan class=\"hljs-built_in\"\u003eFunction\u003c/span\u003e\u003c/span\u003e) : Subscription;\n\n    // 返回 Observable 自身\n    [Symbol.observable](\u003cspan class=\"hljs-params\"\u003e\u003c/span\u003e) : Observable;\n\n    // 把参数转换为同步 Observable\n    static of(\u003cspan class=\"hljs-params\"\u003e...items\u003c/span\u003e) : Observable;\n\n    // 把 Observable 或 可迭代对象转化为 Observable\n    static from(\u003cspan class=\"hljs-params\"\u003eobservable\u003c/span\u003e) : Observable;\n\n}\n\ninterface Subscription {\n\n    \u003cspan class=\"hljs-comment\"\u003e// 取消订阅\u003c/span\u003e\n    unsubscribe() : \u003cspan class=\"hljs-built_in\"\u003evoid\u003c/span\u003e;\n\n    \u003cspan class=\"hljs-comment\"\u003e// 判断流是否已经终止\u003c/span\u003e\n    \u003cspan class=\"hljs-keyword\"\u003eget\u003c/span\u003e closed() : \u003cspan class=\"hljs-built_in\"\u003eBoolean\u003c/span\u003e;\n}\n\n\u003cspan class=\"hljs-function\"\u003e\u003cspan class=\"hljs-keyword\"\u003efunction\u003c/span\u003e \u003cspan class=\"hljs-title\"\u003eSubscriberFunction\u003c/span\u003e(\u003cspan class=\"hljs-params\"\u003eobserver: SubscriptionObserver\u003c/span\u003e) : (\u003cspan class=\"hljs-params\"\u003e\u003cspan class=\"hljs-built_in\"\u003evoid\u003c/span\u003e =\u0026gt; \u003cspan class=\"hljs-built_in\"\u003evoid\u003c/span\u003e\u003c/span\u003e)|\u003cspan class=\"hljs-title\"\u003eSubscription\u003c/span\u003e\u003c/span\u003e;\n\u003c/code\u003e\u003c/pre\u003e\n\u003ch3\u003eReference\u003c/h3\u003e\n\u003cul\u003e\n\u003cli\u003e\u003ca href=\"https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol\"\u003eSymbol\u003c/a\u003e\u003c/li\u003e\n\u003cli\u003e\u003ca href=\"https://tc39.github.io/proposal-observable/\"\u003eObservable\u003c/a\u003e\u003c/li\u003e\n\u003c/ul\u003e\n","name":"Observable 指东","tags":["算法","前端"]}},"page":"/post","query":{"name":"Observable 指东","post":"\u003cp\u003eRxJS 的基础：Observable\u003c/p\u003e\n\u003cp\u003e关于 Observable 的几个基本概念：\u003c/p\u003e\n\u003cul\u003e\n\u003cli\u003eObservable 可观察对象 (本次的主角，一个惰性的值的集合，同步，异步)\u003c/li\u003e\n\u003cli\u003eObserver 观察者 (next/error/complete 回调函数集合，用来监听 Observable 的值)\u003c/li\u003e\n\u003cli\u003eSubscription 订阅 (相当于 Observable 流的句柄)\u003c/li\u003e\n\u003cli\u003eOperators 操作符 (map/filter/retryWhen/…)\u003c/li\u003e\n\u003c/ul\u003e\n\u003cp\u003eObservable 的 \u003cstrong\u003e生命周期\u003c/strong\u003e:\u003c/p\u003e\n\u003col\u003e\n\u003cli\u003e创建 Observable\n\u003cblockquote\u003e\n\u003cp\u003enew Observable(subscriber) 或 Observable.create(subscriber)\u003c/p\u003e\n\u003c/blockquote\u003e\n\u003c/li\u003e\n\u003cli\u003e订阅 Observable\n\u003cblockquote\u003e\n\u003cp\u003eobservable.subscribe(Observer)\u003c/p\u003e\n\u003c/blockquote\u003e\n\u003c/li\u003e\n\u003cli\u003e执行 Observable\n\u003cblockquote\u003e\n\u003cp\u003esubscriber\u003c/p\u003e\n\u003c/blockquote\u003e\n\u003c/li\u003e\n\u003cli\u003e清理 Observable\n\u003cblockquote\u003e\n\u003cp\u003esubscription.unsubscribe\u003c/p\u003e\n\u003c/blockquote\u003e\n\u003c/li\u003e\n\u003c/ol\u003e\n\u003cp\u003e\u003cstrong\u003e订阅 执行\u003c/strong\u003e：\u003c/p\u003e\n\u003cpre\u003e\u003ccode class=\"language-javascript\"\u003e\u003cspan class=\"hljs-function\"\u003e\u003cspan class=\"hljs-keyword\"\u003efunction\u003c/span\u003e \u003cspan class=\"hljs-title\"\u003esubscriber\u003c/span\u003e (\u003cspan class=\"hljs-params\"\u003eobserver\u003c/span\u003e) \u003c/span\u003e{\n  observer.next(\u003cspan class=\"hljs-number\"\u003e1\u003c/span\u003e)\n  observer.next(\u003cspan class=\"hljs-number\"\u003e2\u003c/span\u003e)\n  observer.next(\u003cspan class=\"hljs-number\"\u003e3\u003c/span\u003e)\n}\n\n\u003cspan class=\"hljs-keyword\"\u003econst\u003c/span\u003e observable = Rx.Observable.create(subscriber)\n\n\u003cspan class=\"hljs-keyword\"\u003econst\u003c/span\u003e observer = {\n  \u003cspan class=\"hljs-attr\"\u003enext\u003c/span\u003e: \u003cspan class=\"hljs-function\"\u003e\u003cspan class=\"hljs-params\"\u003eres\u003c/span\u003e =\u0026gt;\u003c/span\u003e \u003cspan class=\"hljs-built_in\"\u003econsole\u003c/span\u003e.log(\u003cspan class=\"hljs-string\"\u003e`next: \u003cspan class=\"hljs-subst\"\u003e${res}\u003c/span\u003e`\u003c/span\u003e),\n  \u003cspan class=\"hljs-attr\"\u003eerror\u003c/span\u003e: \u003cspan class=\"hljs-function\"\u003e\u003cspan class=\"hljs-params\"\u003eerr\u003c/span\u003e =\u0026gt;\u003c/span\u003e \u003cspan class=\"hljs-built_in\"\u003econsole\u003c/span\u003e.error(\u003cspan class=\"hljs-string\"\u003e`error: \u003cspan class=\"hljs-subst\"\u003e${err}\u003c/span\u003e`\u003c/span\u003e),\n  \u003cspan class=\"hljs-attr\"\u003ecomplete\u003c/span\u003e: \u003cspan class=\"hljs-function\"\u003e\u003cspan class=\"hljs-params\"\u003e()\u003c/span\u003e =\u0026gt;\u003c/span\u003e \u003cspan class=\"hljs-built_in\"\u003econsole\u003c/span\u003e.log(\u003cspan class=\"hljs-string\"\u003e'done'\u003c/span\u003e)\n}\n\nobservable.subscribe(observer)\n\u003c/code\u003e\u003c/pre\u003e\n\u003cp\u003e输出：\u003c/p\u003e\n\u003cpre\u003e\u003ccode\u003e\u003cspan class=\"hljs-number\"\u003e1\u003c/span\u003e\n\u003cspan class=\"hljs-number\"\u003e2\u003c/span\u003e\n\u003cspan class=\"hljs-number\"\u003e3\u003c/span\u003e\n\u003c/code\u003e\u003c/pre\u003e\n\u003cp\u003e上面的代码中 \u003ccode\u003esubscribe(observer)\u003c/code\u003e 就是订阅部分，而 \u003ccode\u003esubscriber()\u003c/code\u003e 就是执行部分。\n但是在上面的代码中，我们只是声明了 \u003ccode\u003esubscriber\u003c/code\u003e 函数，并作为参数传给了 \u003ccode\u003ecreate\u003c/code\u003e ，\n代码没有进行 \u003ccode\u003esubscriber()\u003c/code\u003e 调用，所以这个调用只能是 Observable 内部进行的。\u003c/p\u003e\n\u003cp\u003e下面是一个非常简单的 Observable 实现:\u003c/p\u003e\n\u003cpre\u003e\u003ccode class=\"language-javascript\"\u003e\u003cspan class=\"hljs-class\"\u003e\u003cspan class=\"hljs-keyword\"\u003eclass\u003c/span\u003e \u003cspan class=\"hljs-title\"\u003eObservable\u003c/span\u003e \u003c/span\u003e{\n    \u003cspan class=\"hljs-keyword\"\u003estatic\u003c/span\u003e create(subscriber) {\n        \u003cspan class=\"hljs-keyword\"\u003ereturn\u003c/span\u003e \u003cspan class=\"hljs-keyword\"\u003enew\u003c/span\u003e Observable(subscriber)\n    }\n\n    \u003cspan class=\"hljs-keyword\"\u003econstructor\u003c/span\u003e(subscriber) {\n        \u003cspan class=\"hljs-keyword\"\u003ethis\u003c/span\u003e.subscriber = subscriber\n    }\n\n    pipe(...operators) {\n        \u003cspan class=\"hljs-keyword\"\u003ereturn\u003c/span\u003e operators.reduce(\u003cspan class=\"hljs-function\"\u003e(\u003cspan class=\"hljs-params\"\u003epreObservable, nextOperator\u003c/span\u003e) =\u0026gt;\u003c/span\u003e nextOperator(preObservable), \u003cspan class=\"hljs-keyword\"\u003ethis\u003c/span\u003e)\n    }\n\n    subscribe(observer) {\n        \u003cspan class=\"hljs-keyword\"\u003ereturn\u003c/span\u003e \u003cspan class=\"hljs-keyword\"\u003ethis\u003c/span\u003e.subscriber(observer)\n    }\n}\n\n\u003c/code\u003e\u003c/pre\u003e\n\u003cp\u003e使用：\u003c/p\u003e\n\u003cpre\u003e\u003ccode class=\"language-javascript\"\u003e\u003cspan class=\"hljs-keyword\"\u003econst\u003c/span\u003e observable = Observable.create(\u003cspan class=\"hljs-function\"\u003e\u003cspan class=\"hljs-params\"\u003eobserver\u003c/span\u003e =\u0026gt;\u003c/span\u003e {\n  observer.next(\u003cspan class=\"hljs-number\"\u003e1\u003c/span\u003e)\n  observer.next(\u003cspan class=\"hljs-number\"\u003e2\u003c/span\u003e)\n  observer.next(\u003cspan class=\"hljs-number\"\u003e3\u003c/span\u003e)\n})\n\n\u003cspan class=\"hljs-keyword\"\u003econst\u003c/span\u003e subscription = observable.subscribe({\n  \u003cspan class=\"hljs-attr\"\u003enext\u003c/span\u003e: \u003cspan class=\"hljs-function\"\u003e\u003cspan class=\"hljs-params\"\u003eres\u003c/span\u003e =\u0026gt;\u003c/span\u003e \u003cspan class=\"hljs-built_in\"\u003econsole\u003c/span\u003e.log(res)\n})\n\u003c/code\u003e\u003c/pre\u003e\n\u003cp\u003e输出：\u003c/p\u003e\n\u003cpre\u003e\u003ccode\u003e\u003cspan class=\"hljs-number\"\u003e1\u003c/span\u003e\n\u003cspan class=\"hljs-number\"\u003e2\u003c/span\u003e\n\u003cspan class=\"hljs-number\"\u003e3\u003c/span\u003e\n\u003c/code\u003e\u003c/pre\u003e\n\u003cp\u003e可以看到，一个超级简单的 Observable 就实现了，而且主要实现了 \u003cstrong\u003e订阅\u003c/strong\u003e 和 \u003cstrong\u003e执行\u003c/strong\u003e。\n由于代码异常简单，所以我们可以非常清楚的看到，所谓订阅/执行，就是使用 Observer\n调用 \u003ccode\u003esubscribe\u003c/code\u003e 订阅函数，而 \u003ccode\u003esubscribe\u003c/code\u003e 再拿 Observer 调用 \u003ccode\u003esubscriber\u003c/code\u003e，之后\n\u003ccode\u003esubscriber\u003c/code\u003e 调用 \u003ccode\u003eObserver.next\u003c/code\u003e 最终观察者获得了它所监听的 Observable\n的值（1，2，3），到这里一条\u003cstrong\u003e流\u003c/strong\u003e就形成了。而 \u003ccode\u003esubscribe\u003c/code\u003e 就是 \u003ccode\u003esubscriber\u003c/code\u003e 到\nObserver 的桥梁。如果没有 \u003ccode\u003esubscribe\u003c/code\u003e，上面的代码可以更简单的写成下面这个样子：\u003c/p\u003e\n\u003cpre\u003e\u003ccode class=\"language-javascript\"\u003e\u003cspan class=\"hljs-keyword\"\u003econst\u003c/span\u003e subscriber = \u003cspan class=\"hljs-function\"\u003e\u003cspan class=\"hljs-params\"\u003eobserver\u003c/span\u003e =\u0026gt;\u003c/span\u003e {\n  observer.next(\u003cspan class=\"hljs-number\"\u003e1\u003c/span\u003e)\n  observer.next(\u003cspan class=\"hljs-number\"\u003e2\u003c/span\u003e)\n  observer.next(\u003cspan class=\"hljs-number\"\u003e3\u003c/span\u003e)\n}\n\n\u003cspan class=\"hljs-keyword\"\u003econst\u003c/span\u003e observer = {\n  \u003cspan class=\"hljs-attr\"\u003enext\u003c/span\u003e: \u003cspan class=\"hljs-function\"\u003e\u003cspan class=\"hljs-params\"\u003eres\u003c/span\u003e =\u0026gt;\u003c/span\u003e \u003cspan class=\"hljs-built_in\"\u003econsole\u003c/span\u003e.log(res)\n}\n\nsubscriber(observer)\n\u003c/code\u003e\u003c/pre\u003e\n\u003cp\u003e而 \u003ccode\u003esubscribe\u003c/code\u003e 就是把 \u003ccode\u003esubscriber(observer)\u003c/code\u003e 这一步连接了起来。\u003c/p\u003e\n\u003cp\u003e在看会之前的概念：Observable 是一个可观察对象。\u003c/p\u003e\n\u003cp\u003e惰性，只有观察了，才会流动\u003c/p\u003e\n\u003cp\u003e有了这些特性就可以把一些常用模型的建立操作符，通过组合操作实现各种逻辑\u003c/p\u003e\n\u003cp\u003e实现简单的操作符\u003c/p\u003e\n\u003cpre\u003e\u003ccode class=\"language-javascript\"\u003e\u003cspan class=\"hljs-function\"\u003e\u003cspan class=\"hljs-keyword\"\u003efunction\u003c/span\u003e \u003cspan class=\"hljs-title\"\u003estartWith\u003c/span\u003e (\u003cspan class=\"hljs-params\"\u003evalue\u003c/span\u003e) \u003c/span\u003e{\n  \u003cspan class=\"hljs-keyword\"\u003ereturn\u003c/span\u003e \u003cspan class=\"hljs-function\"\u003e(\u003cspan class=\"hljs-params\"\u003eobservable\u003c/span\u003e) =\u0026gt;\u003c/span\u003e {\n    \u003cspan class=\"hljs-keyword\"\u003ereturn\u003c/span\u003e \u003cspan class=\"hljs-keyword\"\u003enew\u003c/span\u003e Observable(\u003cspan class=\"hljs-function\"\u003e\u003cspan class=\"hljs-params\"\u003eobserver\u003c/span\u003e =\u0026gt;\u003c/span\u003e {\n      observer.next(value)\n      \u003cspan class=\"hljs-keyword\"\u003ereturn\u003c/span\u003e observable.subscribe({\n        \u003cspan class=\"hljs-attr\"\u003enext\u003c/span\u003e: \u003cspan class=\"hljs-function\"\u003e\u003cspan class=\"hljs-params\"\u003eres\u003c/span\u003e =\u0026gt;\u003c/span\u003e observer.next(res)\n      })\n    })\n  }\n}\n\n\u003cspan class=\"hljs-function\"\u003e\u003cspan class=\"hljs-keyword\"\u003efunction\u003c/span\u003e \u003cspan class=\"hljs-title\"\u003emap\u003c/span\u003e (\u003cspan class=\"hljs-params\"\u003efn\u003c/span\u003e) \u003c/span\u003e{\n  \u003cspan class=\"hljs-keyword\"\u003ereturn\u003c/span\u003e \u003cspan class=\"hljs-function\"\u003e(\u003cspan class=\"hljs-params\"\u003eobservable\u003c/span\u003e) =\u0026gt;\u003c/span\u003e {\n    \u003cspan class=\"hljs-keyword\"\u003ereturn\u003c/span\u003e \u003cspan class=\"hljs-keyword\"\u003enew\u003c/span\u003e Observable(\u003cspan class=\"hljs-function\"\u003e\u003cspan class=\"hljs-params\"\u003eobserver\u003c/span\u003e =\u0026gt;\u003c/span\u003e {\n      \u003cspan class=\"hljs-keyword\"\u003ereturn\u003c/span\u003e observable.subscribe({\n        \u003cspan class=\"hljs-attr\"\u003enext\u003c/span\u003e: \u003cspan class=\"hljs-function\"\u003e\u003cspan class=\"hljs-params\"\u003eres\u003c/span\u003e =\u0026gt;\u003c/span\u003e observer.next(fn(res))\n      })\n    })\n  }\n}\n\u003c/code\u003e\u003c/pre\u003e\n\u003cp\u003e一个完整的 Observable 还需要关注的点：\u003c/p\u003e\n\u003cul\u003e\n\u003cli\u003eObservable 终结状态: error complete\u003c/li\u003e\n\u003cli\u003eObservable 的另一个状态：取消订阅 unsubscribe\u003c/li\u003e\n\u003c/ul\u003e\n\u003ch3\u003eObservable 提案:\u003c/h3\u003e\n\u003cp\u003eObservable API\u003c/p\u003e\n\u003cpre\u003e\u003ccode class=\"language-typescript\"\u003e\u003cspan class=\"hljs-keyword\"\u003einterface\u003c/span\u003e Observable {\n\n    \u003cspan class=\"hljs-keyword\"\u003econstructor\u003c/span\u003e(\u003cspan class=\"hljs-params\"\u003esubscriber : SubscriberFunction\u003c/span\u003e);\n\n    // 订阅接收一个 Observer 观察者对象\n    subscribe(\u003cspan class=\"hljs-params\"\u003eobserver : Observer\u003c/span\u003e) : Subscription;\n\n    // 订阅接收函数:\n    // onNext 对应 Observer.next\n    // onError 对应 Observer.error\n    // onComplete 对应 Observer.complete\n    subscribe(\u003cspan class=\"hljs-params\"\u003eonNext : \u003cspan class=\"hljs-built_in\"\u003eFunction\u003c/span\u003e,\n              onError? : \u003cspan class=\"hljs-built_in\"\u003eFunction\u003c/span\u003e,\n              onComplete? : \u003cspan class=\"hljs-built_in\"\u003eFunction\u003c/span\u003e\u003c/span\u003e) : Subscription;\n\n    // 返回 Observable 自身\n    [Symbol.observable](\u003cspan class=\"hljs-params\"\u003e\u003c/span\u003e) : Observable;\n\n    // 把参数转换为同步 Observable\n    static of(\u003cspan class=\"hljs-params\"\u003e...items\u003c/span\u003e) : Observable;\n\n    // 把 Observable 或 可迭代对象转化为 Observable\n    static from(\u003cspan class=\"hljs-params\"\u003eobservable\u003c/span\u003e) : Observable;\n\n}\n\ninterface Subscription {\n\n    \u003cspan class=\"hljs-comment\"\u003e// 取消订阅\u003c/span\u003e\n    unsubscribe() : \u003cspan class=\"hljs-built_in\"\u003evoid\u003c/span\u003e;\n\n    \u003cspan class=\"hljs-comment\"\u003e// 判断流是否已经终止\u003c/span\u003e\n    \u003cspan class=\"hljs-keyword\"\u003eget\u003c/span\u003e closed() : \u003cspan class=\"hljs-built_in\"\u003eBoolean\u003c/span\u003e;\n}\n\n\u003cspan class=\"hljs-function\"\u003e\u003cspan class=\"hljs-keyword\"\u003efunction\u003c/span\u003e \u003cspan class=\"hljs-title\"\u003eSubscriberFunction\u003c/span\u003e(\u003cspan class=\"hljs-params\"\u003eobserver: SubscriptionObserver\u003c/span\u003e) : (\u003cspan class=\"hljs-params\"\u003e\u003cspan class=\"hljs-built_in\"\u003evoid\u003c/span\u003e =\u0026gt; \u003cspan class=\"hljs-built_in\"\u003evoid\u003c/span\u003e\u003c/span\u003e)|\u003cspan class=\"hljs-title\"\u003eSubscription\u003c/span\u003e\u003c/span\u003e;\n\u003c/code\u003e\u003c/pre\u003e\n\u003ch3\u003eReference\u003c/h3\u003e\n\u003cul\u003e\n\u003cli\u003e\u003ca href=\"https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol\"\u003eSymbol\u003c/a\u003e\u003c/li\u003e\n\u003cli\u003e\u003ca href=\"https://tc39.github.io/proposal-observable/\"\u003eObservable\u003c/a\u003e\u003c/li\u003e\n\u003c/ul\u003e\n","tags":["算法","前端"]},"buildId":"jpbKUD7AYBmTrqkCoq~uJ","nextExport":true};__NEXT_LOADED_PAGES__=[];__NEXT_REGISTER_PAGE=function(r,f){__NEXT_LOADED_PAGES__.push([r, f])}</script><script async="" id="__NEXT_PAGE__/post" src="/_next/static/jpbKUD7AYBmTrqkCoq~uJ/pages/post.js"></script><script async="" id="__NEXT_PAGE__/_app" src="/_next/static/jpbKUD7AYBmTrqkCoq~uJ/pages/_app.js"></script><script async="" id="__NEXT_PAGE__/_error" src="/_next/static/jpbKUD7AYBmTrqkCoq~uJ/pages/_error.js"></script><script src="/_next/static/runtime/webpack-89179faa512dd01fbb62.js" async=""></script><script src="/_next/static/chunks/commons.8aeda863d6c53958c0af.js" async=""></script><script src="/_next/static/chunks/styles.d41130c6e010994f16ae.js" async=""></script><script src="/_next/static/runtime/main-8fc375480079f7d43d7c.js" async=""></script></body></html>

@@ -1,0 +1,413 @@
+<!DOCTYPE html><html><head><meta charSet="utf-8" class="next-head"/><link rel="shortcut icon" type="image/ico" href="/_next/static/assets/favicon@1XoaNi6d.ico" class="next-head"/><title class="next-head">「编辑距离-日常」</title><link rel="preload" href="/_next/static/jpbKUD7AYBmTrqkCoq~uJ/pages/post.js" as="script"/><link rel="preload" href="/_next/static/jpbKUD7AYBmTrqkCoq~uJ/pages/_app.js" as="script"/><link rel="preload" href="/_next/static/jpbKUD7AYBmTrqkCoq~uJ/pages/_error.js" as="script"/><link rel="preload" href="/_next/static/runtime/webpack-89179faa512dd01fbb62.js" as="script"/><link rel="preload" href="/_next/static/chunks/commons.8aeda863d6c53958c0af.js" as="script"/><link rel="preload" href="/_next/static/chunks/styles.d41130c6e010994f16ae.js" as="script"/><link rel="preload" href="/_next/static/runtime/main-8fc375480079f7d43d7c.js" as="script"/><link rel="stylesheet" href="/_next/static/css/styles.d02a4e39.chunk.css"/><meta charSet="utf-8"/><meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no"/><meta name="theme-color" content="#CCBFB2"/><style id="server-side-styles">.c011 {
+  width: 100vw;
+  height: 100vh;
+}
+.c012 {
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 36vh;
+  position: fixed;
+  background-color: #CCBFB2;
+}
+.c013 {
+  left: 24px;
+  color: #333333;
+  bottom: 24px;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  font-size: 36px;
+}
+@media screen and (max-width: 600px) {
+  .c013 {
+    left: 8px;
+    bottom: 16px;
+    font-size: 28px;
+  }
+}
+.c014 {
+  top: 24px;
+  right: 24px;
+  color: #333333;
+  position: absolute;
+  text-align: right;
+}
+@media screen and (max-width: 600px) {
+  .c014 {
+    top: 16px;
+    right: 8px;
+  }
+}
+.c014 h2, .c014 h3 {
+  margin: 0;
+  padding: 0;
+  marginbottom: 16px;
+}
+.c014 h2 {
+  font-size: 30px;
+}
+.c014 h3 {
+  font-size: 22px;
+  margin-top: 10px;
+}
+.c014 a {
+  color: #333333;
+  text-decoration: none;
+}
+@media screen and (max-width: 600px) {
+  .c014 h3 {
+    font-size: 18px;
+    margin-top: 5px;
+  }
+}
+@media screen and (max-width: 600px) {
+  .c014 h2 {
+    font-size: 24px;
+  }
+}
+.c015 {
+  right: 16px;
+  color: #CCBFB2;
+  bottom: 16px;
+  position: fixed;
+  font-size: 60px;
+  writing-mode: tb;
+  letter-spacing: 10px;
+}
+@media screen and (max-width: 600px) {
+  .c015 {
+    display: none;
+  }
+}
+.c015 a {
+  color: #CCBFB2;
+  text-decoration: none;
+}
+.c016 {
+  top: 0;
+  left: 0;
+  width: 100vw;
+  position: absolute;
+  margin-top: 36vh;
+  overflow-y: scroll;
+  box-sizing: border-box;
+  background-color: #333333;
+}
+.c017 {
+  padding: 24px;
+  box-sizing: border-box;
+  border-top: 1px transparent solid;
+  min-height: 60vh;
+}
+@media screen and (max-width: 600px) {
+  .c017 {
+    padding: 8px;
+    padding-top: 24px;
+  }
+}
+.c018 {
+  color: #504c48;
+  height: 4vh;
+  text-align: center;
+  line-height: 4vh;
+}
+.c018 a {
+  color: #504c48;
+  transition: all 2s;
+  text-decoration: none;
+}
+.c018 a:hover {
+  color: #CCBFB2;
+}</style></head><body><div id="__next"><div class="c011"><div class="c012"><h1 class="c013">编辑距离</h1><nav class="c014"><a href="/"><h2>年糕小豆汤</h2></a><h3><a href="/tag/算法">算法</a></h3><h3><a href="/tag/前端">前端</a></h3></nav></div><section class="c016"><div class="c017"><section class="markdown-body"><p>编辑距离是什么？下面是摘自维基百科的说明：</p>
+<blockquote>
+<p>莱文斯坦距离，又称Levenshtein距离，是编辑距离（edit distance）的一种。指两个字串之间，由一个转成另一个所需的最少编辑操作次数。许可的编辑操作包括将一个字符替换成另一个字符，插入一个字符，删除一个字符。</p>
+</blockquote>
+<p>例如将kitten一字转成sitting：</p>
+<ol>
+<li>sitten   (k→s)</li>
+<li>sittin   (e→i)</li>
+<li>sitting  (→g)</li>
+</ol>
+<p>俄罗斯科学家弗拉基米尔·莱文斯坦在1965年提出这个概念。</p>
+<h4><strong>算法分析</strong></h4>
+<p>从一个字符串变到另一个字符串可以：</p>
+<ol>
+<li>删除一个字符</li>
+<li>插入一个字符</li>
+<li>替换一个字符</li>
+</ol>
+<p>从 hello 变到 aeliloo：</p>
+<ol>
+<li>h （substitute）替换为 a ：编辑距离+1</li>
+<li>插入（insert） i         ：编辑距离+1</li>
+<li>删除 （delete）o         ：编辑距离+1</li>
+</ol>
+<p>所以编辑距离为：3</p>
+<h4><strong>如何计算最小编辑距离</strong></h4>
+<p>首先定义两个变量 i（目标字符串中字符的位置）和 j（原始字符串中字符的位置）</p>
+<p>则编辑距离 s = D(i,j)</p>
+<ol>
+<li>i = 0, j = 0 --&gt; D(0, 0) = 0</li>
+<li>i &gt; 0, j = 0 --&gt; D(i, 0) = i (插入i次)</li>
+<li>j = 0, j &gt; 0 --&gt; D(0, j) = j (删除j次)</li>
+<li>i &gt; 0, j &gt; 0 --&gt; D(i, j) = Min { edit(i-1, j) + 1, edit(i, j-1) + 1, edit(i-1, j-1) + f(i,j) }，其中如果 i == j，则 f(i,j) = 0, 否则 f(i, j) = 1</li>
+</ol>
+<p>最小编辑距离算法伪代码：</p>
+<pre><code><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">MinEditDistance</span><span class="hljs-params">(targetStr, sourceStr)</span> {</span>
+    n = <span class="hljs-built_in">length</span>(targetStr)
+    m = <span class="hljs-built_in">length</span>(sourceStr)
+    matrix D[n,m]
+    D[<span class="hljs-number">0</span>,<span class="hljs-number">0</span>] = <span class="hljs-number">0</span>;
+    D[<span class="hljs-number">0</span>,<span class="hljs-number">1</span>] = <span class="hljs-number">1.</span>.....D[<span class="hljs-number">0</span>,m] = m;
+    D[<span class="hljs-number">1</span>,<span class="hljs-number">0</span>] = <span class="hljs-number">1.</span>.....D[n,<span class="hljs-number">0</span>] = n;
+    <span class="hljs-keyword">for</span> <span class="hljs-built_in">i</span> of range: <span class="hljs-number">1</span> to n
+        <span class="hljs-keyword">for</span> <span class="hljs-built_in">j</span> of range: <span class="hljs-number">1</span> to m
+            D[<span class="hljs-built_in">i</span>, <span class="hljs-built_in">j</span>] = <span class="hljs-built_in">min</span>(D[<span class="hljs-built_in">i</span><span class="hljs-number">-1</span>, <span class="hljs-built_in">j</span>] + <span class="hljs-number">1</span>, D[<span class="hljs-built_in">i</span>, <span class="hljs-built_in">j</span><span class="hljs-number">-1</span>] + <span class="hljs-number">1</span>, D[<span class="hljs-built_in">i</span><span class="hljs-number">-1</span>, <span class="hljs-built_in">j</span><span class="hljs-number">-1</span>] + f(<span class="hljs-built_in">i</span>, <span class="hljs-built_in">j</span>))
+    <span class="hljs-keyword">return</span> D[n,m]
+}
+</code></pre>
+<p>从 hello 变到 aeliloo：目标字符串 aeliloo，源字符串 hello</p>
+<p>由：</p>
+<pre><code>D[<span class="hljs-number">0</span>,<span class="hljs-number">0</span>] = <span class="hljs-number">0</span>;
+D[<span class="hljs-number">0</span>,<span class="hljs-number">1</span>] = <span class="hljs-number">1.</span>.....D[<span class="hljs-number">0</span>,m] = m;
+D[<span class="hljs-number">1</span>,<span class="hljs-number">0</span>] = <span class="hljs-number">1.</span>.....D[n,<span class="hljs-number">0</span>] = n;
+</code></pre>
+<p>可得 dMatrix:</p>
+<table>
+<thead>
+<tr>
+<th>0</th>
+<th>1,a</th>
+<th>2,e</th>
+<th>3,l</th>
+<th>4,i</th>
+<th>5,l</th>
+<th>6,o</th>
+<th>7,o</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1,h</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2,e</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>3,l</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>4,l</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>5,o</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>由： dMatrix[i,j] = min(dMatrix[i-1, j] + 1, dMatrix[i, j-1] + 1, dMatrix[i-1, j-1] + f(i, j))</p>
+<p>当： i = 1, j = 1</p>
+<p>所以：dMatrix[1,1] = min(dMatrix[0, 1] + 1, dMatrix[1, 0] + 1, dMatrix[0, 0] + f(1, 1)) 由于 字符 <code>a</code> 不等于 <code>h</code> 所以 f(1,1) = 1</p>
+<p>得：dMatrix[1,1] = 1;</p>
+<table>
+<thead>
+<tr>
+<th>0</th>
+<th>1,a</th>
+<th>2,e</th>
+<th>3,l</th>
+<th>4,i</th>
+<th>5,l</th>
+<th>6,o</th>
+<th>7,o</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1,h</td>
+<td>1</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2,e</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>3,l</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>4,l</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>5,o</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>由此可以得到最终 dMatrix：</p>
+<table>
+<thead>
+<tr>
+<th>0</th>
+<th>1,a</th>
+<th>2,e</th>
+<th>3,l</th>
+<th>4,i</th>
+<th>5,l</th>
+<th>6,o</th>
+<th>7,o</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1,h</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+<td>5</td>
+<td>6</td>
+<td>7</td>
+</tr>
+<tr>
+<td>2,e</td>
+<td>2</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+<td>5</td>
+<td>6</td>
+</tr>
+<tr>
+<td>3,l</td>
+<td>3</td>
+<td>2</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+<td>5</td>
+</tr>
+<tr>
+<td>4,l</td>
+<td>4</td>
+<td>3</td>
+<td>2</td>
+<td>2</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+</tr>
+<tr>
+<td>5,o</td>
+<td>5</td>
+<td>4</td>
+<td>3</td>
+<td>3</td>
+<td>3</td>
+<td>2</td>
+<td>3</td>
+</tr>
+</tbody>
+</table>
+<p>最小编辑距离 s = dMatrix[7, 5] = 3</p>
+<h4><strong>JavaScript实现</strong></h4>
+<pre><code><span class="hljs-string">'use strict'</span>;
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">minEditDistance</span><span class="hljs-params">(target, source)</span> {</span>
+    var tLen, sLen, dMatrix, <span class="hljs-built_in">i</span>, <span class="hljs-built_in">j</span>, temp;
+    tLen = target.<span class="hljs-built_in">length</span>;
+    sLen = source.<span class="hljs-built_in">length</span>;
+    dMatrix = [];
+    <span class="hljs-keyword">for</span>(<span class="hljs-built_in">i</span> = <span class="hljs-number">0</span>; <span class="hljs-built_in">i</span> &lt;= tLen; <span class="hljs-built_in">i</span>++) {
+        dMatrix.push([<span class="hljs-built_in">i</span>]);
+    }
+    <span class="hljs-keyword">for</span>(<span class="hljs-built_in">i</span> = <span class="hljs-number">0</span>; <span class="hljs-built_in">i</span> &lt;= sLen; <span class="hljs-built_in">i</span>++) {
+        dMatrix[<span class="hljs-number">0</span>][<span class="hljs-built_in">i</span>] = <span class="hljs-built_in">i</span>;
+    }
+    <span class="hljs-keyword">for</span>(<span class="hljs-built_in">i</span> = <span class="hljs-number">1</span>; <span class="hljs-built_in">i</span> &lt;= tLen; <span class="hljs-built_in">i</span>++) {
+        <span class="hljs-keyword">for</span>(<span class="hljs-built_in">j</span> = <span class="hljs-number">1</span>; <span class="hljs-built_in">j</span> &lt;= sLen; <span class="hljs-built_in">j</span>++) {
+            temp = [];
+            temp.push(dMatrix[<span class="hljs-built_in">i</span>][<span class="hljs-built_in">j</span><span class="hljs-number">-1</span>] + <span class="hljs-number">1</span>);
+            temp.push(dMatrix[<span class="hljs-built_in">i</span><span class="hljs-number">-1</span>][<span class="hljs-built_in">j</span>] + <span class="hljs-number">1</span>);
+            temp.push(dMatrix[<span class="hljs-built_in">i</span><span class="hljs-number">-1</span>][<span class="hljs-built_in">j</span><span class="hljs-number">-1</span>] + (target[<span class="hljs-built_in">i</span> - <span class="hljs-number">1</span>] === source[<span class="hljs-built_in">j</span> - <span class="hljs-number">1</span>] ? <span class="hljs-number">0</span> : <span class="hljs-number">1</span>));
+            dMatrix[<span class="hljs-built_in">i</span>][<span class="hljs-built_in">j</span>] = Math.<span class="hljs-built_in">min</span>.apply(null, temp);
+        }
+    }
+
+    <span class="hljs-keyword">return</span> dMatrix[tLen][sLen];
+}
+
+</code></pre>
+<h4><strong>参考</strong></h4>
+<ol>
+<li><a href="https://en.wikipedia.org/wiki/Edit_distance">维基百科：Edit_distance</a></li>
+</ol>
+</section></div><div class="c018"><a href="http://www.miibeian.gov.cn">京ICP备15050638号-1</a> &amp; <a href="/">2018<!-- --> @ 年糕小豆汤</a></div></section><div class="c015"><a href="/">日常</a></div></div></div><script>__NEXT_DATA__ = {"props":{"pageProps":{"post":"\u003cp\u003e编辑距离是什么？下面是摘自维基百科的说明：\u003c/p\u003e\n\u003cblockquote\u003e\n\u003cp\u003e莱文斯坦距离，又称Levenshtein距离，是编辑距离（edit distance）的一种。指两个字串之间，由一个转成另一个所需的最少编辑操作次数。许可的编辑操作包括将一个字符替换成另一个字符，插入一个字符，删除一个字符。\u003c/p\u003e\n\u003c/blockquote\u003e\n\u003cp\u003e例如将kitten一字转成sitting：\u003c/p\u003e\n\u003col\u003e\n\u003cli\u003esitten   (k→s)\u003c/li\u003e\n\u003cli\u003esittin   (e→i)\u003c/li\u003e\n\u003cli\u003esitting  (→g)\u003c/li\u003e\n\u003c/ol\u003e\n\u003cp\u003e俄罗斯科学家弗拉基米尔·莱文斯坦在1965年提出这个概念。\u003c/p\u003e\n\u003ch4\u003e\u003cstrong\u003e算法分析\u003c/strong\u003e\u003c/h4\u003e\n\u003cp\u003e从一个字符串变到另一个字符串可以：\u003c/p\u003e\n\u003col\u003e\n\u003cli\u003e删除一个字符\u003c/li\u003e\n\u003cli\u003e插入一个字符\u003c/li\u003e\n\u003cli\u003e替换一个字符\u003c/li\u003e\n\u003c/ol\u003e\n\u003cp\u003e从 hello 变到 aeliloo：\u003c/p\u003e\n\u003col\u003e\n\u003cli\u003eh （substitute）替换为 a ：编辑距离+1\u003c/li\u003e\n\u003cli\u003e插入（insert） i         ：编辑距离+1\u003c/li\u003e\n\u003cli\u003e删除 （delete）o         ：编辑距离+1\u003c/li\u003e\n\u003c/ol\u003e\n\u003cp\u003e所以编辑距离为：3\u003c/p\u003e\n\u003ch4\u003e\u003cstrong\u003e如何计算最小编辑距离\u003c/strong\u003e\u003c/h4\u003e\n\u003cp\u003e首先定义两个变量 i（目标字符串中字符的位置）和 j（原始字符串中字符的位置）\u003c/p\u003e\n\u003cp\u003e则编辑距离 s = D(i,j)\u003c/p\u003e\n\u003col\u003e\n\u003cli\u003ei = 0, j = 0 --\u0026gt; D(0, 0) = 0\u003c/li\u003e\n\u003cli\u003ei \u0026gt; 0, j = 0 --\u0026gt; D(i, 0) = i (插入i次)\u003c/li\u003e\n\u003cli\u003ej = 0, j \u0026gt; 0 --\u0026gt; D(0, j) = j (删除j次)\u003c/li\u003e\n\u003cli\u003ei \u0026gt; 0, j \u0026gt; 0 --\u0026gt; D(i, j) = Min { edit(i-1, j) + 1, edit(i, j-1) + 1, edit(i-1, j-1) + f(i,j) }，其中如果 i == j，则 f(i,j) = 0, 否则 f(i, j) = 1\u003c/li\u003e\n\u003c/ol\u003e\n\u003cp\u003e最小编辑距离算法伪代码：\u003c/p\u003e\n\u003cpre\u003e\u003ccode\u003e\u003cspan class=\"hljs-function\"\u003e\u003cspan class=\"hljs-keyword\"\u003efunction\u003c/span\u003e \u003cspan class=\"hljs-title\"\u003eMinEditDistance\u003c/span\u003e\u003cspan class=\"hljs-params\"\u003e(targetStr, sourceStr)\u003c/span\u003e {\u003c/span\u003e\n    n = \u003cspan class=\"hljs-built_in\"\u003elength\u003c/span\u003e(targetStr)\n    m = \u003cspan class=\"hljs-built_in\"\u003elength\u003c/span\u003e(sourceStr)\n    matrix D[n,m]\n    D[\u003cspan class=\"hljs-number\"\u003e0\u003c/span\u003e,\u003cspan class=\"hljs-number\"\u003e0\u003c/span\u003e] = \u003cspan class=\"hljs-number\"\u003e0\u003c/span\u003e;\n    D[\u003cspan class=\"hljs-number\"\u003e0\u003c/span\u003e,\u003cspan class=\"hljs-number\"\u003e1\u003c/span\u003e] = \u003cspan class=\"hljs-number\"\u003e1.\u003c/span\u003e.....D[\u003cspan class=\"hljs-number\"\u003e0\u003c/span\u003e,m] = m;\n    D[\u003cspan class=\"hljs-number\"\u003e1\u003c/span\u003e,\u003cspan class=\"hljs-number\"\u003e0\u003c/span\u003e] = \u003cspan class=\"hljs-number\"\u003e1.\u003c/span\u003e.....D[n,\u003cspan class=\"hljs-number\"\u003e0\u003c/span\u003e] = n;\n    \u003cspan class=\"hljs-keyword\"\u003efor\u003c/span\u003e \u003cspan class=\"hljs-built_in\"\u003ei\u003c/span\u003e of range: \u003cspan class=\"hljs-number\"\u003e1\u003c/span\u003e to n\n        \u003cspan class=\"hljs-keyword\"\u003efor\u003c/span\u003e \u003cspan class=\"hljs-built_in\"\u003ej\u003c/span\u003e of range: \u003cspan class=\"hljs-number\"\u003e1\u003c/span\u003e to m\n            D[\u003cspan class=\"hljs-built_in\"\u003ei\u003c/span\u003e, \u003cspan class=\"hljs-built_in\"\u003ej\u003c/span\u003e] = \u003cspan class=\"hljs-built_in\"\u003emin\u003c/span\u003e(D[\u003cspan class=\"hljs-built_in\"\u003ei\u003c/span\u003e\u003cspan class=\"hljs-number\"\u003e-1\u003c/span\u003e, \u003cspan class=\"hljs-built_in\"\u003ej\u003c/span\u003e] + \u003cspan class=\"hljs-number\"\u003e1\u003c/span\u003e, D[\u003cspan class=\"hljs-built_in\"\u003ei\u003c/span\u003e, \u003cspan class=\"hljs-built_in\"\u003ej\u003c/span\u003e\u003cspan class=\"hljs-number\"\u003e-1\u003c/span\u003e] + \u003cspan class=\"hljs-number\"\u003e1\u003c/span\u003e, D[\u003cspan class=\"hljs-built_in\"\u003ei\u003c/span\u003e\u003cspan class=\"hljs-number\"\u003e-1\u003c/span\u003e, \u003cspan class=\"hljs-built_in\"\u003ej\u003c/span\u003e\u003cspan class=\"hljs-number\"\u003e-1\u003c/span\u003e] + f(\u003cspan class=\"hljs-built_in\"\u003ei\u003c/span\u003e, \u003cspan class=\"hljs-built_in\"\u003ej\u003c/span\u003e))\n    \u003cspan class=\"hljs-keyword\"\u003ereturn\u003c/span\u003e D[n,m]\n}\n\u003c/code\u003e\u003c/pre\u003e\n\u003cp\u003e从 hello 变到 aeliloo：目标字符串 aeliloo，源字符串 hello\u003c/p\u003e\n\u003cp\u003e由：\u003c/p\u003e\n\u003cpre\u003e\u003ccode\u003eD[\u003cspan class=\"hljs-number\"\u003e0\u003c/span\u003e,\u003cspan class=\"hljs-number\"\u003e0\u003c/span\u003e] = \u003cspan class=\"hljs-number\"\u003e0\u003c/span\u003e;\nD[\u003cspan class=\"hljs-number\"\u003e0\u003c/span\u003e,\u003cspan class=\"hljs-number\"\u003e1\u003c/span\u003e] = \u003cspan class=\"hljs-number\"\u003e1.\u003c/span\u003e.....D[\u003cspan class=\"hljs-number\"\u003e0\u003c/span\u003e,m] = m;\nD[\u003cspan class=\"hljs-number\"\u003e1\u003c/span\u003e,\u003cspan class=\"hljs-number\"\u003e0\u003c/span\u003e] = \u003cspan class=\"hljs-number\"\u003e1.\u003c/span\u003e.....D[n,\u003cspan class=\"hljs-number\"\u003e0\u003c/span\u003e] = n;\n\u003c/code\u003e\u003c/pre\u003e\n\u003cp\u003e可得 dMatrix:\u003c/p\u003e\n\u003ctable\u003e\n\u003cthead\u003e\n\u003ctr\u003e\n\u003cth\u003e0\u003c/th\u003e\n\u003cth\u003e1,a\u003c/th\u003e\n\u003cth\u003e2,e\u003c/th\u003e\n\u003cth\u003e3,l\u003c/th\u003e\n\u003cth\u003e4,i\u003c/th\u003e\n\u003cth\u003e5,l\u003c/th\u003e\n\u003cth\u003e6,o\u003c/th\u003e\n\u003cth\u003e7,o\u003c/th\u003e\n\u003c/tr\u003e\n\u003c/thead\u003e\n\u003ctbody\u003e\n\u003ctr\u003e\n\u003ctd\u003e1,h\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003e2,e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003e3,l\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003e4,l\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003e5,o\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003c/tr\u003e\n\u003c/tbody\u003e\n\u003c/table\u003e\n\u003cp\u003e由： dMatrix[i,j] = min(dMatrix[i-1, j] + 1, dMatrix[i, j-1] + 1, dMatrix[i-1, j-1] + f(i, j))\u003c/p\u003e\n\u003cp\u003e当： i = 1, j = 1\u003c/p\u003e\n\u003cp\u003e所以：dMatrix[1,1] = min(dMatrix[0, 1] + 1, dMatrix[1, 0] + 1, dMatrix[0, 0] + f(1, 1)) 由于 字符 \u003ccode\u003ea\u003c/code\u003e 不等于 \u003ccode\u003eh\u003c/code\u003e 所以 f(1,1) = 1\u003c/p\u003e\n\u003cp\u003e得：dMatrix[1,1] = 1;\u003c/p\u003e\n\u003ctable\u003e\n\u003cthead\u003e\n\u003ctr\u003e\n\u003cth\u003e0\u003c/th\u003e\n\u003cth\u003e1,a\u003c/th\u003e\n\u003cth\u003e2,e\u003c/th\u003e\n\u003cth\u003e3,l\u003c/th\u003e\n\u003cth\u003e4,i\u003c/th\u003e\n\u003cth\u003e5,l\u003c/th\u003e\n\u003cth\u003e6,o\u003c/th\u003e\n\u003cth\u003e7,o\u003c/th\u003e\n\u003c/tr\u003e\n\u003c/thead\u003e\n\u003ctbody\u003e\n\u003ctr\u003e\n\u003ctd\u003e1,h\u003c/td\u003e\n\u003ctd\u003e1\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003e2,e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003e3,l\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003e4,l\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003e5,o\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003c/tr\u003e\n\u003c/tbody\u003e\n\u003c/table\u003e\n\u003cp\u003e由此可以得到最终 dMatrix：\u003c/p\u003e\n\u003ctable\u003e\n\u003cthead\u003e\n\u003ctr\u003e\n\u003cth\u003e0\u003c/th\u003e\n\u003cth\u003e1,a\u003c/th\u003e\n\u003cth\u003e2,e\u003c/th\u003e\n\u003cth\u003e3,l\u003c/th\u003e\n\u003cth\u003e4,i\u003c/th\u003e\n\u003cth\u003e5,l\u003c/th\u003e\n\u003cth\u003e6,o\u003c/th\u003e\n\u003cth\u003e7,o\u003c/th\u003e\n\u003c/tr\u003e\n\u003c/thead\u003e\n\u003ctbody\u003e\n\u003ctr\u003e\n\u003ctd\u003e1,h\u003c/td\u003e\n\u003ctd\u003e1\u003c/td\u003e\n\u003ctd\u003e2\u003c/td\u003e\n\u003ctd\u003e3\u003c/td\u003e\n\u003ctd\u003e4\u003c/td\u003e\n\u003ctd\u003e5\u003c/td\u003e\n\u003ctd\u003e6\u003c/td\u003e\n\u003ctd\u003e7\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003e2,e\u003c/td\u003e\n\u003ctd\u003e2\u003c/td\u003e\n\u003ctd\u003e1\u003c/td\u003e\n\u003ctd\u003e2\u003c/td\u003e\n\u003ctd\u003e3\u003c/td\u003e\n\u003ctd\u003e4\u003c/td\u003e\n\u003ctd\u003e5\u003c/td\u003e\n\u003ctd\u003e6\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003e3,l\u003c/td\u003e\n\u003ctd\u003e3\u003c/td\u003e\n\u003ctd\u003e2\u003c/td\u003e\n\u003ctd\u003e1\u003c/td\u003e\n\u003ctd\u003e2\u003c/td\u003e\n\u003ctd\u003e3\u003c/td\u003e\n\u003ctd\u003e4\u003c/td\u003e\n\u003ctd\u003e5\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003e4,l\u003c/td\u003e\n\u003ctd\u003e4\u003c/td\u003e\n\u003ctd\u003e3\u003c/td\u003e\n\u003ctd\u003e2\u003c/td\u003e\n\u003ctd\u003e2\u003c/td\u003e\n\u003ctd\u003e2\u003c/td\u003e\n\u003ctd\u003e3\u003c/td\u003e\n\u003ctd\u003e4\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003e5,o\u003c/td\u003e\n\u003ctd\u003e5\u003c/td\u003e\n\u003ctd\u003e4\u003c/td\u003e\n\u003ctd\u003e3\u003c/td\u003e\n\u003ctd\u003e3\u003c/td\u003e\n\u003ctd\u003e3\u003c/td\u003e\n\u003ctd\u003e2\u003c/td\u003e\n\u003ctd\u003e3\u003c/td\u003e\n\u003c/tr\u003e\n\u003c/tbody\u003e\n\u003c/table\u003e\n\u003cp\u003e最小编辑距离 s = dMatrix[7, 5] = 3\u003c/p\u003e\n\u003ch4\u003e\u003cstrong\u003eJavaScript实现\u003c/strong\u003e\u003c/h4\u003e\n\u003cpre\u003e\u003ccode\u003e\u003cspan class=\"hljs-string\"\u003e'use strict'\u003c/span\u003e;\n\n\u003cspan class=\"hljs-function\"\u003e\u003cspan class=\"hljs-keyword\"\u003efunction\u003c/span\u003e \u003cspan class=\"hljs-title\"\u003eminEditDistance\u003c/span\u003e\u003cspan class=\"hljs-params\"\u003e(target, source)\u003c/span\u003e {\u003c/span\u003e\n    var tLen, sLen, dMatrix, \u003cspan class=\"hljs-built_in\"\u003ei\u003c/span\u003e, \u003cspan class=\"hljs-built_in\"\u003ej\u003c/span\u003e, temp;\n    tLen = target.\u003cspan class=\"hljs-built_in\"\u003elength\u003c/span\u003e;\n    sLen = source.\u003cspan class=\"hljs-built_in\"\u003elength\u003c/span\u003e;\n    dMatrix = [];\n    \u003cspan class=\"hljs-keyword\"\u003efor\u003c/span\u003e(\u003cspan class=\"hljs-built_in\"\u003ei\u003c/span\u003e = \u003cspan class=\"hljs-number\"\u003e0\u003c/span\u003e; \u003cspan class=\"hljs-built_in\"\u003ei\u003c/span\u003e \u0026lt;= tLen; \u003cspan class=\"hljs-built_in\"\u003ei\u003c/span\u003e++) {\n        dMatrix.push([\u003cspan class=\"hljs-built_in\"\u003ei\u003c/span\u003e]);\n    }\n    \u003cspan class=\"hljs-keyword\"\u003efor\u003c/span\u003e(\u003cspan class=\"hljs-built_in\"\u003ei\u003c/span\u003e = \u003cspan class=\"hljs-number\"\u003e0\u003c/span\u003e; \u003cspan class=\"hljs-built_in\"\u003ei\u003c/span\u003e \u0026lt;= sLen; \u003cspan class=\"hljs-built_in\"\u003ei\u003c/span\u003e++) {\n        dMatrix[\u003cspan class=\"hljs-number\"\u003e0\u003c/span\u003e][\u003cspan class=\"hljs-built_in\"\u003ei\u003c/span\u003e] = \u003cspan class=\"hljs-built_in\"\u003ei\u003c/span\u003e;\n    }\n    \u003cspan class=\"hljs-keyword\"\u003efor\u003c/span\u003e(\u003cspan class=\"hljs-built_in\"\u003ei\u003c/span\u003e = \u003cspan class=\"hljs-number\"\u003e1\u003c/span\u003e; \u003cspan class=\"hljs-built_in\"\u003ei\u003c/span\u003e \u0026lt;= tLen; \u003cspan class=\"hljs-built_in\"\u003ei\u003c/span\u003e++) {\n        \u003cspan class=\"hljs-keyword\"\u003efor\u003c/span\u003e(\u003cspan class=\"hljs-built_in\"\u003ej\u003c/span\u003e = \u003cspan class=\"hljs-number\"\u003e1\u003c/span\u003e; \u003cspan class=\"hljs-built_in\"\u003ej\u003c/span\u003e \u0026lt;= sLen; \u003cspan class=\"hljs-built_in\"\u003ej\u003c/span\u003e++) {\n            temp = [];\n            temp.push(dMatrix[\u003cspan class=\"hljs-built_in\"\u003ei\u003c/span\u003e][\u003cspan class=\"hljs-built_in\"\u003ej\u003c/span\u003e\u003cspan class=\"hljs-number\"\u003e-1\u003c/span\u003e] + \u003cspan class=\"hljs-number\"\u003e1\u003c/span\u003e);\n            temp.push(dMatrix[\u003cspan class=\"hljs-built_in\"\u003ei\u003c/span\u003e\u003cspan class=\"hljs-number\"\u003e-1\u003c/span\u003e][\u003cspan class=\"hljs-built_in\"\u003ej\u003c/span\u003e] + \u003cspan class=\"hljs-number\"\u003e1\u003c/span\u003e);\n            temp.push(dMatrix[\u003cspan class=\"hljs-built_in\"\u003ei\u003c/span\u003e\u003cspan class=\"hljs-number\"\u003e-1\u003c/span\u003e][\u003cspan class=\"hljs-built_in\"\u003ej\u003c/span\u003e\u003cspan class=\"hljs-number\"\u003e-1\u003c/span\u003e] + (target[\u003cspan class=\"hljs-built_in\"\u003ei\u003c/span\u003e - \u003cspan class=\"hljs-number\"\u003e1\u003c/span\u003e] === source[\u003cspan class=\"hljs-built_in\"\u003ej\u003c/span\u003e - \u003cspan class=\"hljs-number\"\u003e1\u003c/span\u003e] ? \u003cspan class=\"hljs-number\"\u003e0\u003c/span\u003e : \u003cspan class=\"hljs-number\"\u003e1\u003c/span\u003e));\n            dMatrix[\u003cspan class=\"hljs-built_in\"\u003ei\u003c/span\u003e][\u003cspan class=\"hljs-built_in\"\u003ej\u003c/span\u003e] = Math.\u003cspan class=\"hljs-built_in\"\u003emin\u003c/span\u003e.apply(null, temp);\n        }\n    }\n\n    \u003cspan class=\"hljs-keyword\"\u003ereturn\u003c/span\u003e dMatrix[tLen][sLen];\n}\n\n\u003c/code\u003e\u003c/pre\u003e\n\u003ch4\u003e\u003cstrong\u003e参考\u003c/strong\u003e\u003c/h4\u003e\n\u003col\u003e\n\u003cli\u003e\u003ca href=\"https://en.wikipedia.org/wiki/Edit_distance\"\u003e维基百科：Edit_distance\u003c/a\u003e\u003c/li\u003e\n\u003c/ol\u003e\n","name":"编辑距离","tags":["算法","前端"]}},"page":"/post","query":{"name":"编辑距离","post":"\u003cp\u003e编辑距离是什么？下面是摘自维基百科的说明：\u003c/p\u003e\n\u003cblockquote\u003e\n\u003cp\u003e莱文斯坦距离，又称Levenshtein距离，是编辑距离（edit distance）的一种。指两个字串之间，由一个转成另一个所需的最少编辑操作次数。许可的编辑操作包括将一个字符替换成另一个字符，插入一个字符，删除一个字符。\u003c/p\u003e\n\u003c/blockquote\u003e\n\u003cp\u003e例如将kitten一字转成sitting：\u003c/p\u003e\n\u003col\u003e\n\u003cli\u003esitten   (k→s)\u003c/li\u003e\n\u003cli\u003esittin   (e→i)\u003c/li\u003e\n\u003cli\u003esitting  (→g)\u003c/li\u003e\n\u003c/ol\u003e\n\u003cp\u003e俄罗斯科学家弗拉基米尔·莱文斯坦在1965年提出这个概念。\u003c/p\u003e\n\u003ch4\u003e\u003cstrong\u003e算法分析\u003c/strong\u003e\u003c/h4\u003e\n\u003cp\u003e从一个字符串变到另一个字符串可以：\u003c/p\u003e\n\u003col\u003e\n\u003cli\u003e删除一个字符\u003c/li\u003e\n\u003cli\u003e插入一个字符\u003c/li\u003e\n\u003cli\u003e替换一个字符\u003c/li\u003e\n\u003c/ol\u003e\n\u003cp\u003e从 hello 变到 aeliloo：\u003c/p\u003e\n\u003col\u003e\n\u003cli\u003eh （substitute）替换为 a ：编辑距离+1\u003c/li\u003e\n\u003cli\u003e插入（insert） i         ：编辑距离+1\u003c/li\u003e\n\u003cli\u003e删除 （delete）o         ：编辑距离+1\u003c/li\u003e\n\u003c/ol\u003e\n\u003cp\u003e所以编辑距离为：3\u003c/p\u003e\n\u003ch4\u003e\u003cstrong\u003e如何计算最小编辑距离\u003c/strong\u003e\u003c/h4\u003e\n\u003cp\u003e首先定义两个变量 i（目标字符串中字符的位置）和 j（原始字符串中字符的位置）\u003c/p\u003e\n\u003cp\u003e则编辑距离 s = D(i,j)\u003c/p\u003e\n\u003col\u003e\n\u003cli\u003ei = 0, j = 0 --\u0026gt; D(0, 0) = 0\u003c/li\u003e\n\u003cli\u003ei \u0026gt; 0, j = 0 --\u0026gt; D(i, 0) = i (插入i次)\u003c/li\u003e\n\u003cli\u003ej = 0, j \u0026gt; 0 --\u0026gt; D(0, j) = j (删除j次)\u003c/li\u003e\n\u003cli\u003ei \u0026gt; 0, j \u0026gt; 0 --\u0026gt; D(i, j) = Min { edit(i-1, j) + 1, edit(i, j-1) + 1, edit(i-1, j-1) + f(i,j) }，其中如果 i == j，则 f(i,j) = 0, 否则 f(i, j) = 1\u003c/li\u003e\n\u003c/ol\u003e\n\u003cp\u003e最小编辑距离算法伪代码：\u003c/p\u003e\n\u003cpre\u003e\u003ccode\u003e\u003cspan class=\"hljs-function\"\u003e\u003cspan class=\"hljs-keyword\"\u003efunction\u003c/span\u003e \u003cspan class=\"hljs-title\"\u003eMinEditDistance\u003c/span\u003e\u003cspan class=\"hljs-params\"\u003e(targetStr, sourceStr)\u003c/span\u003e {\u003c/span\u003e\n    n = \u003cspan class=\"hljs-built_in\"\u003elength\u003c/span\u003e(targetStr)\n    m = \u003cspan class=\"hljs-built_in\"\u003elength\u003c/span\u003e(sourceStr)\n    matrix D[n,m]\n    D[\u003cspan class=\"hljs-number\"\u003e0\u003c/span\u003e,\u003cspan class=\"hljs-number\"\u003e0\u003c/span\u003e] = \u003cspan class=\"hljs-number\"\u003e0\u003c/span\u003e;\n    D[\u003cspan class=\"hljs-number\"\u003e0\u003c/span\u003e,\u003cspan class=\"hljs-number\"\u003e1\u003c/span\u003e] = \u003cspan class=\"hljs-number\"\u003e1.\u003c/span\u003e.....D[\u003cspan class=\"hljs-number\"\u003e0\u003c/span\u003e,m] = m;\n    D[\u003cspan class=\"hljs-number\"\u003e1\u003c/span\u003e,\u003cspan class=\"hljs-number\"\u003e0\u003c/span\u003e] = \u003cspan class=\"hljs-number\"\u003e1.\u003c/span\u003e.....D[n,\u003cspan class=\"hljs-number\"\u003e0\u003c/span\u003e] = n;\n    \u003cspan class=\"hljs-keyword\"\u003efor\u003c/span\u003e \u003cspan class=\"hljs-built_in\"\u003ei\u003c/span\u003e of range: \u003cspan class=\"hljs-number\"\u003e1\u003c/span\u003e to n\n        \u003cspan class=\"hljs-keyword\"\u003efor\u003c/span\u003e \u003cspan class=\"hljs-built_in\"\u003ej\u003c/span\u003e of range: \u003cspan class=\"hljs-number\"\u003e1\u003c/span\u003e to m\n            D[\u003cspan class=\"hljs-built_in\"\u003ei\u003c/span\u003e, \u003cspan class=\"hljs-built_in\"\u003ej\u003c/span\u003e] = \u003cspan class=\"hljs-built_in\"\u003emin\u003c/span\u003e(D[\u003cspan class=\"hljs-built_in\"\u003ei\u003c/span\u003e\u003cspan class=\"hljs-number\"\u003e-1\u003c/span\u003e, \u003cspan class=\"hljs-built_in\"\u003ej\u003c/span\u003e] + \u003cspan class=\"hljs-number\"\u003e1\u003c/span\u003e, D[\u003cspan class=\"hljs-built_in\"\u003ei\u003c/span\u003e, \u003cspan class=\"hljs-built_in\"\u003ej\u003c/span\u003e\u003cspan class=\"hljs-number\"\u003e-1\u003c/span\u003e] + \u003cspan class=\"hljs-number\"\u003e1\u003c/span\u003e, D[\u003cspan class=\"hljs-built_in\"\u003ei\u003c/span\u003e\u003cspan class=\"hljs-number\"\u003e-1\u003c/span\u003e, \u003cspan class=\"hljs-built_in\"\u003ej\u003c/span\u003e\u003cspan class=\"hljs-number\"\u003e-1\u003c/span\u003e] + f(\u003cspan class=\"hljs-built_in\"\u003ei\u003c/span\u003e, \u003cspan class=\"hljs-built_in\"\u003ej\u003c/span\u003e))\n    \u003cspan class=\"hljs-keyword\"\u003ereturn\u003c/span\u003e D[n,m]\n}\n\u003c/code\u003e\u003c/pre\u003e\n\u003cp\u003e从 hello 变到 aeliloo：目标字符串 aeliloo，源字符串 hello\u003c/p\u003e\n\u003cp\u003e由：\u003c/p\u003e\n\u003cpre\u003e\u003ccode\u003eD[\u003cspan class=\"hljs-number\"\u003e0\u003c/span\u003e,\u003cspan class=\"hljs-number\"\u003e0\u003c/span\u003e] = \u003cspan class=\"hljs-number\"\u003e0\u003c/span\u003e;\nD[\u003cspan class=\"hljs-number\"\u003e0\u003c/span\u003e,\u003cspan class=\"hljs-number\"\u003e1\u003c/span\u003e] = \u003cspan class=\"hljs-number\"\u003e1.\u003c/span\u003e.....D[\u003cspan class=\"hljs-number\"\u003e0\u003c/span\u003e,m] = m;\nD[\u003cspan class=\"hljs-number\"\u003e1\u003c/span\u003e,\u003cspan class=\"hljs-number\"\u003e0\u003c/span\u003e] = \u003cspan class=\"hljs-number\"\u003e1.\u003c/span\u003e.....D[n,\u003cspan class=\"hljs-number\"\u003e0\u003c/span\u003e] = n;\n\u003c/code\u003e\u003c/pre\u003e\n\u003cp\u003e可得 dMatrix:\u003c/p\u003e\n\u003ctable\u003e\n\u003cthead\u003e\n\u003ctr\u003e\n\u003cth\u003e0\u003c/th\u003e\n\u003cth\u003e1,a\u003c/th\u003e\n\u003cth\u003e2,e\u003c/th\u003e\n\u003cth\u003e3,l\u003c/th\u003e\n\u003cth\u003e4,i\u003c/th\u003e\n\u003cth\u003e5,l\u003c/th\u003e\n\u003cth\u003e6,o\u003c/th\u003e\n\u003cth\u003e7,o\u003c/th\u003e\n\u003c/tr\u003e\n\u003c/thead\u003e\n\u003ctbody\u003e\n\u003ctr\u003e\n\u003ctd\u003e1,h\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003e2,e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003e3,l\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003e4,l\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003e5,o\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003c/tr\u003e\n\u003c/tbody\u003e\n\u003c/table\u003e\n\u003cp\u003e由： dMatrix[i,j] = min(dMatrix[i-1, j] + 1, dMatrix[i, j-1] + 1, dMatrix[i-1, j-1] + f(i, j))\u003c/p\u003e\n\u003cp\u003e当： i = 1, j = 1\u003c/p\u003e\n\u003cp\u003e所以：dMatrix[1,1] = min(dMatrix[0, 1] + 1, dMatrix[1, 0] + 1, dMatrix[0, 0] + f(1, 1)) 由于 字符 \u003ccode\u003ea\u003c/code\u003e 不等于 \u003ccode\u003eh\u003c/code\u003e 所以 f(1,1) = 1\u003c/p\u003e\n\u003cp\u003e得：dMatrix[1,1] = 1;\u003c/p\u003e\n\u003ctable\u003e\n\u003cthead\u003e\n\u003ctr\u003e\n\u003cth\u003e0\u003c/th\u003e\n\u003cth\u003e1,a\u003c/th\u003e\n\u003cth\u003e2,e\u003c/th\u003e\n\u003cth\u003e3,l\u003c/th\u003e\n\u003cth\u003e4,i\u003c/th\u003e\n\u003cth\u003e5,l\u003c/th\u003e\n\u003cth\u003e6,o\u003c/th\u003e\n\u003cth\u003e7,o\u003c/th\u003e\n\u003c/tr\u003e\n\u003c/thead\u003e\n\u003ctbody\u003e\n\u003ctr\u003e\n\u003ctd\u003e1,h\u003c/td\u003e\n\u003ctd\u003e1\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003e2,e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003e3,l\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003e4,l\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003e5,o\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003ctd\u003e\u003c/td\u003e\n\u003c/tr\u003e\n\u003c/tbody\u003e\n\u003c/table\u003e\n\u003cp\u003e由此可以得到最终 dMatrix：\u003c/p\u003e\n\u003ctable\u003e\n\u003cthead\u003e\n\u003ctr\u003e\n\u003cth\u003e0\u003c/th\u003e\n\u003cth\u003e1,a\u003c/th\u003e\n\u003cth\u003e2,e\u003c/th\u003e\n\u003cth\u003e3,l\u003c/th\u003e\n\u003cth\u003e4,i\u003c/th\u003e\n\u003cth\u003e5,l\u003c/th\u003e\n\u003cth\u003e6,o\u003c/th\u003e\n\u003cth\u003e7,o\u003c/th\u003e\n\u003c/tr\u003e\n\u003c/thead\u003e\n\u003ctbody\u003e\n\u003ctr\u003e\n\u003ctd\u003e1,h\u003c/td\u003e\n\u003ctd\u003e1\u003c/td\u003e\n\u003ctd\u003e2\u003c/td\u003e\n\u003ctd\u003e3\u003c/td\u003e\n\u003ctd\u003e4\u003c/td\u003e\n\u003ctd\u003e5\u003c/td\u003e\n\u003ctd\u003e6\u003c/td\u003e\n\u003ctd\u003e7\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003e2,e\u003c/td\u003e\n\u003ctd\u003e2\u003c/td\u003e\n\u003ctd\u003e1\u003c/td\u003e\n\u003ctd\u003e2\u003c/td\u003e\n\u003ctd\u003e3\u003c/td\u003e\n\u003ctd\u003e4\u003c/td\u003e\n\u003ctd\u003e5\u003c/td\u003e\n\u003ctd\u003e6\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003e3,l\u003c/td\u003e\n\u003ctd\u003e3\u003c/td\u003e\n\u003ctd\u003e2\u003c/td\u003e\n\u003ctd\u003e1\u003c/td\u003e\n\u003ctd\u003e2\u003c/td\u003e\n\u003ctd\u003e3\u003c/td\u003e\n\u003ctd\u003e4\u003c/td\u003e\n\u003ctd\u003e5\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003e4,l\u003c/td\u003e\n\u003ctd\u003e4\u003c/td\u003e\n\u003ctd\u003e3\u003c/td\u003e\n\u003ctd\u003e2\u003c/td\u003e\n\u003ctd\u003e2\u003c/td\u003e\n\u003ctd\u003e2\u003c/td\u003e\n\u003ctd\u003e3\u003c/td\u003e\n\u003ctd\u003e4\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003e5,o\u003c/td\u003e\n\u003ctd\u003e5\u003c/td\u003e\n\u003ctd\u003e4\u003c/td\u003e\n\u003ctd\u003e3\u003c/td\u003e\n\u003ctd\u003e3\u003c/td\u003e\n\u003ctd\u003e3\u003c/td\u003e\n\u003ctd\u003e2\u003c/td\u003e\n\u003ctd\u003e3\u003c/td\u003e\n\u003c/tr\u003e\n\u003c/tbody\u003e\n\u003c/table\u003e\n\u003cp\u003e最小编辑距离 s = dMatrix[7, 5] = 3\u003c/p\u003e\n\u003ch4\u003e\u003cstrong\u003eJavaScript实现\u003c/strong\u003e\u003c/h4\u003e\n\u003cpre\u003e\u003ccode\u003e\u003cspan class=\"hljs-string\"\u003e'use strict'\u003c/span\u003e;\n\n\u003cspan class=\"hljs-function\"\u003e\u003cspan class=\"hljs-keyword\"\u003efunction\u003c/span\u003e \u003cspan class=\"hljs-title\"\u003eminEditDistance\u003c/span\u003e\u003cspan class=\"hljs-params\"\u003e(target, source)\u003c/span\u003e {\u003c/span\u003e\n    var tLen, sLen, dMatrix, \u003cspan class=\"hljs-built_in\"\u003ei\u003c/span\u003e, \u003cspan class=\"hljs-built_in\"\u003ej\u003c/span\u003e, temp;\n    tLen = target.\u003cspan class=\"hljs-built_in\"\u003elength\u003c/span\u003e;\n    sLen = source.\u003cspan class=\"hljs-built_in\"\u003elength\u003c/span\u003e;\n    dMatrix = [];\n    \u003cspan class=\"hljs-keyword\"\u003efor\u003c/span\u003e(\u003cspan class=\"hljs-built_in\"\u003ei\u003c/span\u003e = \u003cspan class=\"hljs-number\"\u003e0\u003c/span\u003e; \u003cspan class=\"hljs-built_in\"\u003ei\u003c/span\u003e \u0026lt;= tLen; \u003cspan class=\"hljs-built_in\"\u003ei\u003c/span\u003e++) {\n        dMatrix.push([\u003cspan class=\"hljs-built_in\"\u003ei\u003c/span\u003e]);\n    }\n    \u003cspan class=\"hljs-keyword\"\u003efor\u003c/span\u003e(\u003cspan class=\"hljs-built_in\"\u003ei\u003c/span\u003e = \u003cspan class=\"hljs-number\"\u003e0\u003c/span\u003e; \u003cspan class=\"hljs-built_in\"\u003ei\u003c/span\u003e \u0026lt;= sLen; \u003cspan class=\"hljs-built_in\"\u003ei\u003c/span\u003e++) {\n        dMatrix[\u003cspan class=\"hljs-number\"\u003e0\u003c/span\u003e][\u003cspan class=\"hljs-built_in\"\u003ei\u003c/span\u003e] = \u003cspan class=\"hljs-built_in\"\u003ei\u003c/span\u003e;\n    }\n    \u003cspan class=\"hljs-keyword\"\u003efor\u003c/span\u003e(\u003cspan class=\"hljs-built_in\"\u003ei\u003c/span\u003e = \u003cspan class=\"hljs-number\"\u003e1\u003c/span\u003e; \u003cspan class=\"hljs-built_in\"\u003ei\u003c/span\u003e \u0026lt;= tLen; \u003cspan class=\"hljs-built_in\"\u003ei\u003c/span\u003e++) {\n        \u003cspan class=\"hljs-keyword\"\u003efor\u003c/span\u003e(\u003cspan class=\"hljs-built_in\"\u003ej\u003c/span\u003e = \u003cspan class=\"hljs-number\"\u003e1\u003c/span\u003e; \u003cspan class=\"hljs-built_in\"\u003ej\u003c/span\u003e \u0026lt;= sLen; \u003cspan class=\"hljs-built_in\"\u003ej\u003c/span\u003e++) {\n            temp = [];\n            temp.push(dMatrix[\u003cspan class=\"hljs-built_in\"\u003ei\u003c/span\u003e][\u003cspan class=\"hljs-built_in\"\u003ej\u003c/span\u003e\u003cspan class=\"hljs-number\"\u003e-1\u003c/span\u003e] + \u003cspan class=\"hljs-number\"\u003e1\u003c/span\u003e);\n            temp.push(dMatrix[\u003cspan class=\"hljs-built_in\"\u003ei\u003c/span\u003e\u003cspan class=\"hljs-number\"\u003e-1\u003c/span\u003e][\u003cspan class=\"hljs-built_in\"\u003ej\u003c/span\u003e] + \u003cspan class=\"hljs-number\"\u003e1\u003c/span\u003e);\n            temp.push(dMatrix[\u003cspan class=\"hljs-built_in\"\u003ei\u003c/span\u003e\u003cspan class=\"hljs-number\"\u003e-1\u003c/span\u003e][\u003cspan class=\"hljs-built_in\"\u003ej\u003c/span\u003e\u003cspan class=\"hljs-number\"\u003e-1\u003c/span\u003e] + (target[\u003cspan class=\"hljs-built_in\"\u003ei\u003c/span\u003e - \u003cspan class=\"hljs-number\"\u003e1\u003c/span\u003e] === source[\u003cspan class=\"hljs-built_in\"\u003ej\u003c/span\u003e - \u003cspan class=\"hljs-number\"\u003e1\u003c/span\u003e] ? \u003cspan class=\"hljs-number\"\u003e0\u003c/span\u003e : \u003cspan class=\"hljs-number\"\u003e1\u003c/span\u003e));\n            dMatrix[\u003cspan class=\"hljs-built_in\"\u003ei\u003c/span\u003e][\u003cspan class=\"hljs-built_in\"\u003ej\u003c/span\u003e] = Math.\u003cspan class=\"hljs-built_in\"\u003emin\u003c/span\u003e.apply(null, temp);\n        }\n    }\n\n    \u003cspan class=\"hljs-keyword\"\u003ereturn\u003c/span\u003e dMatrix[tLen][sLen];\n}\n\n\u003c/code\u003e\u003c/pre\u003e\n\u003ch4\u003e\u003cstrong\u003e参考\u003c/strong\u003e\u003c/h4\u003e\n\u003col\u003e\n\u003cli\u003e\u003ca href=\"https://en.wikipedia.org/wiki/Edit_distance\"\u003e维基百科：Edit_distance\u003c/a\u003e\u003c/li\u003e\n\u003c/ol\u003e\n","tags":["算法","前端"]},"buildId":"jpbKUD7AYBmTrqkCoq~uJ","nextExport":true};__NEXT_LOADED_PAGES__=[];__NEXT_REGISTER_PAGE=function(r,f){__NEXT_LOADED_PAGES__.push([r, f])}</script><script async="" id="__NEXT_PAGE__/post" src="/_next/static/jpbKUD7AYBmTrqkCoq~uJ/pages/post.js"></script><script async="" id="__NEXT_PAGE__/_app" src="/_next/static/jpbKUD7AYBmTrqkCoq~uJ/pages/_app.js"></script><script async="" id="__NEXT_PAGE__/_error" src="/_next/static/jpbKUD7AYBmTrqkCoq~uJ/pages/_error.js"></script><script src="/_next/static/runtime/webpack-89179faa512dd01fbb62.js" async=""></script><script src="/_next/static/chunks/commons.8aeda863d6c53958c0af.js" async=""></script><script src="/_next/static/chunks/styles.d41130c6e010994f16ae.js" async=""></script><script src="/_next/static/runtime/main-8fc375480079f7d43d7c.js" async=""></script></body></html>
