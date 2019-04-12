@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="200">
+    <path stroke="#000" stroke-dasharray="60 20" stroke-width="20" d="M0,10 H600" opacity="0.2"/>
+    <path stroke="#000" stroke-dasharray="60 20" stroke-dashoffset="-20" stroke-width="20" d="M0,40 H600" opacity="0.2"/>
+    <path stroke="#000" stroke-dasharray="60 20" stroke-dashoffset="20" stroke-width="20" d="M0,70 H600" opacity="0.2"/>
+    <path fill="#000" stroke="#000" stroke-width="2" d="M0,0 H79 V200 H0 V0 V200" opacity="0.15"/>
+    <path stroke="#f00" stroke-width="2" d="M79,0 V200" opacity="0.15"/>
+</svg>
